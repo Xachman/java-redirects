@@ -23,6 +23,12 @@ public class Main {
 			map.put("content", "create-redirect/layout.hbs");
 			return new ModelAndView(map, "layout.hbs");
 		}, new HandlebarsTemplateEngine());
+		post("/create-redirect", (req, res) -> {
+			System.out.println(req.queryParams());
+			Map map = new HashMap();
+			map.put("content", "create-redirect/layout.hbs");
+			return new ModelAndView(map, "layout.hbs");
+		}, new HandlebarsTemplateEngine());
 		get("/redirects", (req, res) -> "Hello World!");
 		get("/", (req, res) -> "Hello World!");
 	}

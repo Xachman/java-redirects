@@ -13,7 +13,7 @@ public class Main {
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args) {
-
+		Spark.staticFileLocation("/public");
 		Spark.exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
 		});

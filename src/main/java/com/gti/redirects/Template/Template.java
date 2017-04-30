@@ -12,5 +12,13 @@ import spark.ModelAndView;
  * @author xach
  */
 public class Template {
+
+	Template() {
+		
+	}
+
+	public String header() {
+		return "";	
+	}
 	
 }

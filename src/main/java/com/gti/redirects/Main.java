@@ -16,6 +16,7 @@ public class Main {
 	public static void main(String[] args) {
 		Spark.port(4000);
 		Spark.staticFileLocation("/public");
+		Storage storage = new Storage();
 		Spark.exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
 		});
@@ -28,8 +29,7 @@ public class Main {
 		post("/create-redirect", (req, res) -> {
 			System.out.println(req.queryParams());
 			Redirect redirect = new Redirect(req.queryParams("domain"), req.queryParams("type"), req.queryParams("redirect_to"));
-			Storage storage = new Storage();
-			storage.storeRedirect(redirect);
+			storage.addRedirect(redirect);
 			Map map = new HashMap();
 			map.put("content", "create-redirect/layout.hbs");
 			map.put("redirect", redirect.toMap());

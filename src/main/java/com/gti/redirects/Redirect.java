@@ -15,6 +15,19 @@ import org.json.simple.JSONObject;
  */
 public class Redirect {
 	private String domain;
+
+	public String getType() {
+		return type;
+	}
+
+	public String getRedirect_to() {
+		return redirect_to;
+	}
+
+	public String getDomain() {
+		return domain;
+	}
+
 	private String type;
 	private String redirect_to;
 
@@ -33,7 +46,7 @@ public class Redirect {
 		return redirect;
 	}
 	
-	public Map toMap() {
+	public Map<String, String> toMap() {
 		Map map = new HashMap();
 		map.put("domain", domain);
 		map.put("type", type);

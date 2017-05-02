@@ -1,3 +1,9 @@
 .gradle/
 .nb-gradle/
+gradle/
+gradlew
+gradlew.bat
+out/
+redirects.json
 build/
+.idea/

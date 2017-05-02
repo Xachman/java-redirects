@@ -40,7 +40,7 @@ public class Storage implements StorageI {
     }
 
     @Override
-    public List redirects() {
+    public List<Map<String, String>> redirects() {
         List<Map<String, String>> redirects = new ArrayList<Map<String, String>>();
         JSONArray jsonArray = null;
         try {

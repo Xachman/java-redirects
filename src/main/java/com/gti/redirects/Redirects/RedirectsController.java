@@ -18,7 +18,8 @@ import java.util.Map;
 public class RedirectsController {
     public static Route serveCreateRedirect = (Request request, Response response) -> {
         Map map = new HashMap();
-        map.put("content", "create-redirect/layout.hbs");
+        map.put("content", "create-edit-redirect/layout.hbs");
+        map.put("post_url", "/admin/create-redirect");
         return ViewUtil.render(request, map, "layout.hbs");
     };
     public static Route serveCreateRedirectPost = (Request request, Response response) -> {
@@ -26,7 +27,7 @@ public class RedirectsController {
         StorageI storage = new Storage();
         storage.addRedirect(redirect);
         Map map = new HashMap();
-        map.put("content", "create-redirect/layout.hbs");
+        map.put("content", "create-edit-redirect/layout.hbs");
         map.put("redirect", redirect.toMap());
         return ViewUtil.render(request, map, "layout.hbs");
     };
@@ -43,7 +44,7 @@ public class RedirectsController {
         Map redirect = storage.redirects().get(Integer.parseInt(request.params(":id").toString()));
         Map map = new HashMap();
         map.put("redirect", redirect);
-        map.put("content", "create-redirect/layout.hbs");
+        map.put("content", "create-edit-redirect/layout.hbs");
         return ViewUtil.render(request, map, "layout.hbs");
     };
 }

@@ -1,15 +1,11 @@
 package com.gti.redirects;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import com.gti.redirects.Redirects.RedirectStorage;
 import com.gti.redirects.Redirects.RedirectsController;
-import spark.ModelAndView;
 import spark.Spark;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Main {
 
@@ -19,7 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 		Spark.port(4000);
 		Spark.staticFileLocation("/public");
-		Storage storage = new Storage();
+		RedirectStorage redirectStorage = new RedirectStorage();
 		Spark.exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
 		});
@@ -27,6 +23,7 @@ public class Main {
 		post("/admin/create-redirect", RedirectsController.serveCreateRedirectPost);
 		get("/admin/redirects", RedirectsController.serveRedirects);
 		get("/admin/edit-redirect/:id", RedirectsController.serveEditRedirect);
+		get("/admin/delete-redirect/:id", RedirectsController.serveDeleteRedirect);
 		get("/", (req, res) -> "Hello World!");
 	}
 }

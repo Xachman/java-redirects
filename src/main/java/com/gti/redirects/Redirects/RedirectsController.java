@@ -1,7 +1,5 @@
 package com.gti.redirects.Redirects;
 
-import com.gti.redirects.Redirect;
-import com.gti.redirects.Storage;
 import com.gti.redirects.StorageI;
 import com.gti.redirects.Util.ViewUtil;
 import spark.Request;
@@ -24,27 +22,33 @@ public class RedirectsController {
     };
     public static Route serveCreateRedirectPost = (Request request, Response response) -> {
         Redirect redirect = new Redirect(request.queryParams("domain"), request.queryParams("type"), request.queryParams("redirect_to"));
-        StorageI storage = new Storage();
-        storage.addRedirect(redirect);
+        StorageI storage = new RedirectStorage();
+        storage.add(redirect.toMap());
         Map map = new HashMap();
         map.put("content", "create-edit-redirect/layout.hbs");
         map.put("redirect", redirect.toMap());
         return ViewUtil.render(request, map, "layout.hbs");
     };
     public static Route serveRedirects = (Request request, Response response) -> {
-        StorageI storage = new Storage();
-        List redirects = storage.redirects();
+        StorageI storage = new RedirectStorage();
+        List redirects = storage.getAll();
         Map map = new HashMap();
         map.put("redirects", redirects);
         map.put("content", "redirects/layout.hbs");
         return ViewUtil.render(request, map, "layout.hbs");
     };
     public static Route serveEditRedirect = (Request request, Response response) -> {
-        StorageI storage = new Storage();
-        Map redirect = storage.redirects().get(Integer.parseInt(request.params(":id").toString()));
+        StorageI storage = new RedirectStorage();
+        Map redirect = storage.getAll().get(Integer.parseInt(request.params(":id").toString()));
         Map map = new HashMap();
         map.put("redirect", redirect);
         map.put("content", "create-edit-redirect/layout.hbs");
         return ViewUtil.render(request, map, "layout.hbs");
+    };
+    public static Route serveDeleteRedirect = (Request request, Response response) -> {
+        StorageI storage = new RedirectStorage();
+        storage.delete(Integer.parseInt(request.params(":id").toString()));
+        response.redirect("/admin/redirects");
+        return null;
     };
 }

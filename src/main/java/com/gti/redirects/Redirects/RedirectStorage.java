@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gti.redirects;
+package com.gti.redirects.Redirects;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.gti.redirects.StorageI;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,11 +20,11 @@ import org.json.simple.parser.ParseException;
 /**
  * @author xach
  */
-public class Storage implements StorageI {
+public class RedirectStorage implements StorageI {
     private String file = "redirects.json";
     private File jsonFile;
 
-    public Storage() {
+    public RedirectStorage() {
         File redirectFile = new File(System.getProperty("user.dir") + "/" + file);
         try {
             if (redirectFile.createNewFile()) {
@@ -40,7 +41,7 @@ public class Storage implements StorageI {
     }
 
     @Override
-    public List<Map<String, String>> redirects() {
+    public List<Map<String, String>> getAll() {
         List<Map<String, String>> redirects = new ArrayList<Map<String, String>>();
         JSONArray jsonArray = null;
         try {
@@ -66,7 +67,7 @@ public class Storage implements StorageI {
     }
 
     @Override
-    public boolean addRedirect(Redirect redirect) {
+    public boolean add(Map redirect) {
         try {
             System.out.println("Successfully Copied JSON Object to File...");
             JSONArray jsonArray = parseFile();
@@ -81,19 +82,31 @@ public class Storage implements StorageI {
         }
         return false;
     }
-
+    @Override
+    public boolean delete(int index) {
+        try {
+            JSONArray jsonArray = parseFile();
+            jsonArray.remove(index);
+            writeJsonArray(jsonArray);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     private JSONArray parseFile() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         System.out.println(jsonFile.getPath());
         return (JSONArray) parser.parse(new FileReader(jsonFile.getPath()));
     }
 
-    private JSONObject convertRedirectToJson(Redirect redirect) {
+    private JSONObject convertRedirectToJson(Map redirect) {
         JSONObject json = new JSONObject();
 
-        json.put("domain", redirect.getDomain());
-        json.put("type", redirect.getType());
-        json.put("redirect_to", redirect.getRedirect_to());
+        json.put("domain", redirect.get("domain"));
+        json.put("type", redirect.get("type"));
+        json.put("redirect_to", redirect.get("redirect_to"));
         return json;
     }
 

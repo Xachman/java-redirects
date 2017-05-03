@@ -51,4 +51,26 @@ public class RedirectsController {
         response.redirect("/admin/redirects");
         return null;
     };
+    public static Route serveRedirect = (Request request, Response response) -> {
+        Map redirect = getRedirectByDomain(request.host());
+        if(redirect != null) {
+            response.status(Integer.parseInt(redirect.get("type").toString()));
+            response.redirect(redirect.get("redirect_to").toString());
+        }
+        response.redirect("/404");
+        return null;
+    };
+
+    private static Map getRedirectByDomain(String domain) {
+        StorageI storage = new RedirectStorage();
+        List<Map<String,String>> redirects = storage.getAll();
+
+        for (Map redirect : redirects) {
+            if(redirect.get("domain").equals(domain)) {
+                return redirect;
+            }
+        }
+
+        return null;
+    }
 }

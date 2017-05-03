@@ -46,6 +46,6 @@ public class Main {
 		get("/admin/edit-redirect/:id", RedirectsController.serveEditRedirect);
 		get("/admin/delete-redirect/:id", RedirectsController.serveDeleteRedirect);
 		get("/admin/login", (request, response) -> "login");
-		get("/", (req, res) -> "Hello World!");
+		get("/", RedirectsController.serveRedirect);
 	}
 }

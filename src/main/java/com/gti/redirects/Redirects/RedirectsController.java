@@ -56,6 +56,7 @@ public class RedirectsController {
         if(redirect != null) {
             response.status(Integer.parseInt(redirect.get("type").toString()));
             response.redirect(redirect.get("redirect_to").toString());
+            return null;
         }
         response.redirect("/404");
         return null;

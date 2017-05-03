@@ -21,11 +21,10 @@ import org.json.simple.parser.ParseException;
  * @author xach
  */
 public class RedirectStorage implements StorageI {
-    private String file = "redirects.json";
     private File jsonFile;
 
-    public RedirectStorage() {
-        File redirectFile = new File(System.getProperty("user.dir") + "/" + file);
+    public RedirectStorage(String filePath) {
+        File redirectFile = new File(filePath);
         try {
             if (redirectFile.createNewFile()) {
                 JSONArray jsonArray = new JSONArray();
@@ -38,6 +37,9 @@ public class RedirectStorage implements StorageI {
             e.printStackTrace();
         }
 
+    }
+    public RedirectStorage() {
+        this(System.getProperty("user.dir") + "/redirects.json");
     }
 
     @Override

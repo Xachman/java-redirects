@@ -58,7 +58,7 @@ public class RedirectStorage implements StorageI {
                 JSONObject object = (JSONObject) jsonArray.get(i);
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("domain", object.get("domain").toString());
-                map.put("type", object.get("type").toString());
+                map.put("status", object.get("status").toString());
                 map.put("redirect_to", object.get("redirect_to").toString());
 
                 redirects.add(map);
@@ -107,7 +107,7 @@ public class RedirectStorage implements StorageI {
         JSONObject json = new JSONObject();
 
         json.put("domain", redirect.get("domain"));
-        json.put("type", redirect.get("type"));
+        json.put("type", redirect.get("status"));
         json.put("redirect_to", redirect.get("redirect_to"));
         return json;
     }

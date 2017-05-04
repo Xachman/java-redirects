@@ -1,0 +1,5 @@
+[
+  {"domain":"domain1.com","status":"301","redirect_to":"http:\/\/newdomain1.com"},
+  {"domain":"domain2.com","status":"302","redirect_to":"http:\/\/newdomain2.com"},
+  {"domain":"domain3.com","status":"404","redirect_to":"http:\/\/newdomain3.com"}
+]

@@ -4,8 +4,7 @@ import static spark.Spark.before;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import com.gti.redirects.Redirects.RedirectStorage;
-import com.gti.redirects.Redirects.RedirectsController;
+import com.gti.redirects.Redirects.*;
 import spark.Spark;
 
 import java.util.Base64;
@@ -28,7 +27,6 @@ public class Main {
 			if(auth != null && auth.startsWith("Basic")) {
 				String b64Credentials = auth.substring("Basic".length()).trim();
 				String credentials = new String(Base64.getDecoder().decode(b64Credentials));
-				System.out.println(credentials);
 				if(credentials.equals(System.getenv("USER_NAME")+":"+System.getenv("USER_PASSWORD"))) authenticated = true;
 			}
 			if(!authenticated) {
@@ -40,8 +38,9 @@ public class Main {
 				}
 			}
 		});
+		RedirectsModel redirectsModel = new RedirectsModel();
 		get("/admin/create-redirect", RedirectsController.serveCreateRedirect);
-		post("/admin/create-redirect", RedirectsController.serveCreateRedirectPost);
+		post("/admin/create-redirect", new CreateRedirect(redirectsModel));
 		get("/admin/redirects", RedirectsController.serveRedirects);
 		get("/admin/edit-redirect/:id", RedirectsController.serveEditRedirect);
 		get("/admin/delete-redirect/:id", RedirectsController.serveDeleteRedirect);

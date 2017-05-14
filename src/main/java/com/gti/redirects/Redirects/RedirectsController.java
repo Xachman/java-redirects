@@ -18,7 +18,7 @@ public class RedirectsController {
         Map map = new HashMap();
         map.put("content", "create-edit-redirect/layout.hbs");
         map.put("post_url", "/admin/create-redirect");
-        return ViewUtil.render(request, map, "layout.hbs");
+        return ViewUtil.render(map, "layout.hbs");
     };
     public static Route serveCreateRedirectPost = (Request request, Response response) -> {
         Redirect redirect = new Redirect(request.queryParams("domain"), request.queryParams("type"), request.queryParams("redirect_to"));
@@ -27,7 +27,7 @@ public class RedirectsController {
         Map map = new HashMap();
         map.put("content", "create-edit-redirect/layout.hbs");
         map.put("redirect", redirect.toMap());
-        return ViewUtil.render(request, map, "layout.hbs");
+        return ViewUtil.render(map, "layout.hbs");
     };
     public static Route serveRedirects = (Request request, Response response) -> {
         StorageI storage = new RedirectStorage();
@@ -35,7 +35,7 @@ public class RedirectsController {
         Map map = new HashMap();
         map.put("redirects", redirects);
         map.put("content", "redirects/layout.hbs");
-        return ViewUtil.render(request, map, "layout.hbs");
+        return ViewUtil.render(map, "layout.hbs");
     };
     public static Route serveEditRedirect = (Request request, Response response) -> {
         StorageI storage = new RedirectStorage();
@@ -43,7 +43,7 @@ public class RedirectsController {
         Map map = new HashMap();
         map.put("redirect", redirect);
         map.put("content", "create-edit-redirect/layout.hbs");
-        return ViewUtil.render(request, map, "layout.hbs");
+        return ViewUtil.render(map, "layout.hbs");
     };
     public static Route serveDeleteRedirect = (Request request, Response response) -> {
         StorageI storage = new RedirectStorage();

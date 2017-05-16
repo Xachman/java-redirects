@@ -1,4 +1,4 @@
-package com.gti.redirects.Redirects;
+package com.gti.redirects;
 
 /**
  * Created by xach on 5/13/17.

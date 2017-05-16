@@ -3,14 +3,12 @@ package com.gti.redirects;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.gti.redirects.Redirects.EmptyPayload;
 import com.gti.redirects.Util.QueryParamUtil;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 /**
  * Created by xach on 5/11/17.

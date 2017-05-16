@@ -2,9 +2,12 @@ package com.gti.redirects.Redirects;
 
 import com.gti.redirects.AbstractRequest;
 import com.gti.redirects.Answer;
+import com.gti.redirects.EmptyPayload;
 import com.gti.redirects.Util.ViewUtil;
 import com.gti.redirects.Validable;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +22,11 @@ public class RedirectsRequest<V extends Validable> extends AbstractRequest {
     @Override
     protected Answer processImpl(Validable value, Map queryParams, boolean shouldReturnHtml) {
         if(shouldReturnHtml) {
-            return Answer.ok(ViewUtil.render(templateMap, "layout.hbs"));
+            List redirects = model.find();
+            Map map = new HashMap();
+            map.put("redirects", redirects);
+            map.put("content", "redirects/layout.hbs");
+            return Answer.ok(ViewUtil.render(map, "layout.hbs"));
         } else {
             String json = dataToJson(model);
             return Answer.ok(json);

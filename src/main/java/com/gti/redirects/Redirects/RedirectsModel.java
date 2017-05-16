@@ -2,6 +2,7 @@ package com.gti.redirects.Redirects;
 
 import com.github.xachman.Table;
 import com.gti.redirects.Model;
+import com.sun.org.apache.regexp.internal.RE;
 
 import java.util.List;
 import java.util.Map;

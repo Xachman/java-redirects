@@ -38,10 +38,11 @@ public class Main {
 				}
 			}
 		});
+
 		RedirectsModel redirectsModel = new RedirectsModel();
 		get("/admin/create-redirect", RedirectsController.serveCreateRedirect);
 		post("/admin/create-redirect", new CreateRedirect(redirectsModel));
-		get("/admin/redirects", RedirectsController.serveRedirects);
+		get("/admin/redirects", new RedirectsRequest(redirectsModel));
 		get("/admin/edit-redirect/:id", RedirectsController.serveEditRedirect);
 		get("/admin/delete-redirect/:id", RedirectsController.serveDeleteRedirect);
 		get("/admin/login", (request, response) -> "login");

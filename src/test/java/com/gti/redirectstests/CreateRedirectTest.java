@@ -47,8 +47,8 @@ public class CreateRedirectTest {
 
         Model model = EasyMock.createNiceMock(Model.class);
 
-        EasyMock.expect(model.save(saveHash)).andReturn(true);
-        EasyMock.expect(model.find()).andReturn(findReturn);
+        EasyMock.expect(model.save(saveHash)).andReturn(true).times(2);
+        EasyMock.expect(model.find()).andReturn(findReturn).times(2);
         EasyMock.replay(model);
 
         CreateRedirect createRedirect = new CreateRedirect(model);
@@ -62,5 +62,33 @@ public class CreateRedirectTest {
         jsonObject.put("use_path", returnHash.get("use_path"));
 
         assertEquals(new Answer(200, jsonObject.toJSONString()), createRedirect.process(crPayload, new HashMap<>(), false));
+        assertEquals(new Answer(200, "Location: /admin/edit-redirect/1"), createRedirect.process(crPayload, new HashMap<>(), true));
+    }
+
+    @Test
+    public void badRedirectPost() {
+        CreateRedirectPayload crPayload = new CreateRedirectPayload();
+        crPayload.setDomain("");
+        crPayload.setRedirect_domain("newdomain.com");
+        crPayload.setStatus("301");
+        crPayload.setUse_path(1);
+        Assert.assertTrue(!crPayload.isValid());
+
+        Map<String, String> returnHash = new HashMap<>();
+        returnHash.put("id", "1");
+        returnHash.put("domain", "domain.com");
+        returnHash.put("redirect_domain", "newdomain.com");
+        returnHash.put("status", "301");
+        returnHash.put("use_path", "1");
+        List<Map<String,String>> findReturn = new ArrayList<>(Arrays.asList(returnHash));
+
+
+        Model model = EasyMock.createNiceMock(Model.class);
+
+
+        CreateRedirect createRedirect = new CreateRedirect(model);
+
+
+        assertEquals(new Answer(400), createRedirect.process(crPayload, new HashMap<>(), false));
     }
 }

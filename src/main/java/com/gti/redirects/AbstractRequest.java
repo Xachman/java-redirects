@@ -4,11 +4,15 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.gti.redirects.Util.QueryParamUtil;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 /**
  * Created by xach on 5/11/17.
@@ -30,14 +34,20 @@ public abstract class AbstractRequest<V extends Validable> implements com.gti.re
         return accept != null && accept.contains("text/html");
     }
 
-    public static String dataToJson(Object data) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            return mapper.writeValueAsString(data);
-        } catch (IOException e){
-            throw new RuntimeException("IOException from a StringWriter?");
+    public static String dataToJson(List<Map<String, String>> data) {
+        JSONArray jsonArray = new JSONArray();
+        for(Map<String, String> map: data) {
+            Iterator it = map.entrySet().iterator();
+            JSONObject jsonObject = new JSONObject();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                jsonObject.put(pair.getKey(), pair.getValue());
+                it.remove(); // avoids a ConcurrentModificationException
+            }
+            jsonArray.add(jsonObject);
         }
+
+        return jsonArray.toString();
     }
 
     public final Answer process(V value, Map<String, String> queryParams, boolean shouldReturnHtml) {

@@ -20,7 +20,7 @@ public class RedirectsModel implements Model {
     }
 
     @Override
-    public List<Map<String, String>> find(String id) {
+    public List<Map<String, String>> find(int id) {
         return null;
     }
 

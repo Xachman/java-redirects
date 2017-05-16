@@ -3,10 +3,7 @@ package com.gti.redirectstests;
 import com.gti.redirects.Answer;
 import com.gti.redirects.Model;
 import com.gti.redirects.Redirects.CreateRedirect;
-import com.gti.redirects.Redirects.CreateRedirectPayload;
-import com.gti.redirects.Redirects.RedirectsModel;
-import com.gti.redirects.Validable;
-import com.sun.org.apache.xerces.internal.xs.StringList;
+import com.gti.redirects.Redirects.RedirectPayload;
 import org.easymock.EasyMock;
 import org.json.simple.JSONObject;
 import org.junit.Assert;
@@ -22,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class CreateRedirectTest {
     @Test
     public void createsRedirect() {
-        CreateRedirectPayload crPayload = new CreateRedirectPayload();
+        RedirectPayload crPayload = new RedirectPayload();
         crPayload.setDomain("domain.com");
         crPayload.setRedirect_domain("newdomain.com");
         crPayload.setStatus("301");
@@ -67,7 +64,7 @@ public class CreateRedirectTest {
 
     @Test
     public void badRedirectPost() {
-        CreateRedirectPayload crPayload = new CreateRedirectPayload();
+        RedirectPayload crPayload = new RedirectPayload();
         crPayload.setDomain("");
         crPayload.setRedirect_domain("newdomain.com");
         crPayload.setStatus("301");

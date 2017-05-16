@@ -5,7 +5,7 @@ import com.gti.redirects.Validable;
 /**
  * Created by xach on 5/13/17.
  */
-public class CreateRedirectPayload implements Validable {
+public class RedirectPayload implements Validable {
     private String domain;
     private String status;
     private String redirect_domain;

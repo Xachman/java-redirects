@@ -3,10 +3,6 @@ package com.gti.redirects.Redirects;
 import com.gti.redirects.AbstractRequest;
 import com.gti.redirects.Answer;
 import com.gti.redirects.Model;
-import com.gti.redirects.Util.ViewUtil;
-import com.gti.redirects.Validable;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
@@ -16,14 +12,14 @@ import java.util.Map;
 /**
  * Created by xach on 5/13/17.
  */
-public class CreateRedirect extends AbstractRequest<CreateRedirectPayload> {
+public class CreateRedirect extends AbstractRequest<RedirectPayload> {
 
     public CreateRedirect(Model model) {
-        super(CreateRedirectPayload.class, model);
+        super(RedirectPayload.class, model);
     }
 
     @Override
-    protected Answer processImpl(CreateRedirectPayload value, Map queryParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(RedirectPayload value, Map queryParams, boolean shouldReturnHtml) {
         Map map = new HashMap();
 
         Map saveVals = new HashMap();

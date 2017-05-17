@@ -13,22 +13,22 @@ public class RedirectsModel implements Model {
     private Table redirectsTable = new RedirectsTable();
 
     @Override
-    public List<Map<String, String>> find() {
+    public List<Map<String, Object>> find() {
         return null;
     }
 
     @Override
-    public List<Map<String, String>> find(int id) {
+    public List<Map<String, Object>> find(int id) {
         return null;
     }
 
     @Override
-    public boolean save(Map<String, String> data) {
+    public boolean save(Map<String, Object> data) {
         return false;
     }
 
     @Override
-    public boolean delete() {
+    public boolean delete(int id) {
         return false;
     }
 }

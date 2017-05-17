@@ -28,7 +28,7 @@ public class EditRedirectPost extends AbstractController<RedirectPayload> {
         saveVals.put("use_path", value.getUse_path());
 
         model.save(saveVals);
-        List<Map<String,String>> redirects = model.find(Integer.parseInt(queryParams.get("id").toString()));
+        List<Map<String, Object>> redirects = model.find(Integer.parseInt(queryParams.get("id").toString()));
         if(shouldReturnHtml) {
             map.put("redirect", redirects);
             map.put("content", "redirects/layout.hbs");

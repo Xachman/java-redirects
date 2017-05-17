@@ -20,7 +20,7 @@ public class RedirectsController<V extends Validable> extends AbstractController
 
     @Override
     protected Answer processImpl(Validable value, Map queryParams, boolean shouldReturnHtml) {
-        List<Map<String,String>> redirects = model.find();
+        List<Map<String, Object>> redirects = model.find();
         if(shouldReturnHtml) {
             Map map = new HashMap();
             map.put("redirects", redirects);
@@ -30,7 +30,7 @@ public class RedirectsController<V extends Validable> extends AbstractController
 
             JSONArray jsonArray = new JSONArray();
 
-            for(Map<String, String> map : redirects) {
+            for(Map<String, Object> map : redirects) {
                 JSONObject jsonObject = new JSONObject();
 
                 jsonObject.put("id", map.get("id"));

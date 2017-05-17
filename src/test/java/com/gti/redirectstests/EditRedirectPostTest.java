@@ -20,11 +20,11 @@ import java.util.Map;
  * Created by xach on 5/16/17.
  */
 public class EditRedirectPostTest {
-    private List<Map<String, String>> returnFind = new ArrayList<>();
+    private List<Map<String, Object>> returnFind = new ArrayList<>();
 
     @Before
     public void beforeAll() {
-        Map<String, String> returnHash = new HashMap<>();
+        Map<String, Object> returnHash = new HashMap<>();
         returnHash.put("id", "3");
         returnHash.put("domain", "domain.com");
         returnHash.put("redirect_domain", "newdomain.com");
@@ -54,7 +54,7 @@ public class EditRedirectPostTest {
         map.put("id", "3");
 
         JSONArray jsonArray = new JSONArray();
-        for(Map<String, String> mapFind : returnFind) {
+        for(Map<String, Object> mapFind : returnFind) {
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", mapFind.get("id"));

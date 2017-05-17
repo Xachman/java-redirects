@@ -18,7 +18,7 @@ public class EditRedirectDisplay extends AbstractController {
 
     @Override
     protected Answer processImpl(Validable value, Map queryParams, boolean shouldReturnHtml) {
-        List<Map<String,String>> redirects = model.find(Integer.parseInt(queryParams.get("id").toString()));
+        List<Map<String, Object>> redirects = model.find(Integer.parseInt(queryParams.get("id").toString()));
         if(shouldReturnHtml) {
             Map map = new HashMap();
             map.put("redirect", redirects);

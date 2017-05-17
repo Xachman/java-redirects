@@ -34,9 +34,9 @@ public abstract class AbstractController<V extends Validable> implements com.gti
         return accept != null && accept.contains("text/html");
     }
 
-    public static String dataToJson(List<Map<String, String>> data) {
+    public static String dataToJson(List<Map<String, Object>> data) {
         JSONArray jsonArray = new JSONArray();
-        for(Map<String, String> map: data) {
+        for(Map<String, Object> map: data) {
             Iterator it = map.entrySet().iterator();
             JSONObject jsonObject = new JSONObject();
             while (it.hasNext()) {

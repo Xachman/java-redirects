@@ -8,8 +8,8 @@ import java.util.Map;
  */
 
 public interface Model {
-   public List<Map<String, String>> find();
-   public List<Map<String, String>> find(int id);
-   public boolean save(Map<String, String> data);
+   public List<Map<String, Object>> find();
+   public List<Map<String, Object>> find(int id);
+   public boolean save(Map<String, Object> data);
    public boolean delete(int id);
 }

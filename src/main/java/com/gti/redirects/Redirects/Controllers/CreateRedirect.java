@@ -31,9 +31,9 @@ public class CreateRedirect extends AbstractController<RedirectPayload> {
 
         model.save(saveVals);
 
-        List<Map<String, String>> savedValue = model.find();
+        List<Map<String, Object>> savedValue = model.find();
 
-        Map <String, String> redirect = savedValue.get(0);
+        Map <String, Object> redirect = savedValue.get(0);
         if(shouldReturnHtml) {
             map.put("content", "create-edit-redirect/layout.hbs");
             map.put("redirect", redirect);

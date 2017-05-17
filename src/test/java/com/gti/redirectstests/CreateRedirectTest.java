@@ -26,15 +26,15 @@ public class CreateRedirectTest {
         crPayload.setUse_path(1);
         Assert.assertTrue(crPayload.isValid());
 
-        Map<String, String> returnHash = new HashMap<>();
+        Map<String, Object> returnHash = new HashMap<>();
         returnHash.put("id", "1");
         returnHash.put("domain", "domain.com");
         returnHash.put("redirect_domain", "newdomain.com");
         returnHash.put("status", "301");
         returnHash.put("use_path", "1");
-        List<Map<String,String>> findReturn = new ArrayList<>(Arrays.asList(returnHash));
+        List<Map<String, Object>> findReturn = new ArrayList<>(Arrays.asList(returnHash));
 
-        Map<String, String> saveHash = new HashMap<>();
+        Map<String, Object> saveHash = new HashMap<>();
 
         saveHash.put("domain","domain.com");
         saveHash.put("redirect_domain", "newdomain.com");

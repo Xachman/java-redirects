@@ -20,12 +20,12 @@ import java.util.Map;
  * Created by xach on 5/15/17.
  */
 public class RedirectsRequestTest {
-    private List<Map<String, String>> returnFind = new ArrayList<>();
+    private List<Map<String, Object>> returnFind = new ArrayList<>();
 
 
     @Before
     public void beforeAll() {
-        Map<String, String> returnHash = new HashMap<>();
+        Map<String, Object> returnHash = new HashMap<>();
         returnHash.put("id", "1");
         returnHash.put("domain", "domain.com");
         returnHash.put("redirect_domain", "newdomain.com");
@@ -35,7 +35,7 @@ public class RedirectsRequestTest {
         returnFind.add(returnHash);
 
 
-        Map<String, String> returnHash2 = new HashMap<>();
+        Map<String, Object> returnHash2 = new HashMap<>();
         returnHash.put("id", "2");
         returnHash.put("domain", "domain2.com");
         returnHash.put("redirect_domain", "newdomain2.com");
@@ -45,7 +45,7 @@ public class RedirectsRequestTest {
         returnFind.add(returnHash2);
 
 
-        Map<String, String> returnHash3 = new HashMap<>();
+        Map<String, Object> returnHash3 = new HashMap<>();
         returnHash.put("id", "3");
         returnHash.put("domain", "domain3.com");
         returnHash.put("redirect_domain", "newdomain3.com");
@@ -68,7 +68,7 @@ public class RedirectsRequestTest {
 
         JSONArray jsonArray = new JSONArray();
 
-        for(Map<String, String> map : returnFind) {
+        for(Map<String, Object> map : returnFind) {
             JSONObject jsonObject = new JSONObject();
 
             jsonObject.put("id", map.get("id"));

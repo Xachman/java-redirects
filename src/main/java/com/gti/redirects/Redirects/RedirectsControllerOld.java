@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created by xach on 5/2/17.
  */
-public class RedirectsController {
+public class RedirectsControllerOld {
     public static Route serveCreateRedirect = (Request request, Response response) -> {
         Map map = new HashMap();
         map.put("content", "create-edit-redirect/layout.hbs");

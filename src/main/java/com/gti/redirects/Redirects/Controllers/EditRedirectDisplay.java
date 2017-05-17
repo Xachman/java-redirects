@@ -1,9 +1,7 @@
-package com.gti.redirects.Redirects;
+package com.gti.redirects.Redirects.Controllers;
 
 import com.gti.redirects.*;
 import com.gti.redirects.Util.ViewUtil;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.Map;
 /**
  * Created by xach on 5/16/17.
  */
-public class EditRedirectDisplay extends AbstractRequest {
+public class EditRedirectDisplay extends AbstractController {
     private Map<String, Object> templateMap;
     public EditRedirectDisplay(Model model) {
         super(EmptyPayload.class, model);

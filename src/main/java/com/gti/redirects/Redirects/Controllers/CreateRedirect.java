@@ -1,8 +1,9 @@
-package com.gti.redirects.Redirects;
+package com.gti.redirects.Redirects.Controllers;
 
-import com.gti.redirects.AbstractRequest;
+import com.gti.redirects.AbstractController;
 import com.gti.redirects.Answer;
 import com.gti.redirects.Model;
+import com.gti.redirects.Redirects.Payloads.RedirectPayload;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.Map;
 /**
  * Created by xach on 5/13/17.
  */
-public class CreateRedirect extends AbstractRequest<RedirectPayload> {
+public class CreateRedirect extends AbstractController<RedirectPayload> {
 
     public CreateRedirect(Model model) {
         super(RedirectPayload.class, model);

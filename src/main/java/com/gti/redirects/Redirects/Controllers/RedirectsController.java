@@ -1,4 +1,4 @@
-package com.gti.redirects.Redirects;
+package com.gti.redirects.Redirects.Controllers;
 
 import com.gti.redirects.*;
 import com.gti.redirects.Util.ViewUtil;
@@ -12,9 +12,9 @@ import java.util.Map;
 /**
  * Created by xach on 5/13/17.
  */
-public class RedirectsRequest<V extends Validable> extends AbstractRequest {
+public class RedirectsController<V extends Validable> extends AbstractController {
     private Map <String, Object> templateMap;
-    public RedirectsRequest(Model model) {
+    public RedirectsController(Model model) {
        super(EmptyPayload.class, model);
     }
 

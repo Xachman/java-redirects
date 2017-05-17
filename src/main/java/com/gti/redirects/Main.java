@@ -5,6 +5,9 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import com.gti.redirects.Redirects.*;
+import com.gti.redirects.Redirects.Controllers.CreateRedirect;
+import com.gti.redirects.Redirects.Controllers.RedirectsController;
+import com.gti.redirects.Redirects.Models.RedirectsModel;
 import spark.Spark;
 
 import java.util.Base64;
@@ -40,12 +43,12 @@ public class Main {
 		});
 
 		RedirectsModel redirectsModel = new RedirectsModel();
-		get("/admin/create-redirect", RedirectsController.serveCreateRedirect);
+		get("/admin/create-redirect", RedirectsControllerOld.serveCreateRedirect);
 		post("/admin/create-redirect", new CreateRedirect(redirectsModel));
-		get("/admin/redirects", new RedirectsRequest(redirectsModel));
-		get("/admin/edit-redirect/:id", RedirectsController.serveEditRedirect);
-		get("/admin/delete-redirect/:id", RedirectsController.serveDeleteRedirect);
+		get("/admin/redirects", new RedirectsController(redirectsModel));
+		get("/admin/edit-redirect/:id", RedirectsControllerOld.serveEditRedirect);
+		get("/admin/delete-redirect/:id", RedirectsControllerOld.serveDeleteRedirect);
 		get("/admin/login", (request, response) -> "login");
-		get("/", RedirectsController.serveRedirect);
+		get("/", RedirectsControllerOld.serveRedirect);
 	}
 }

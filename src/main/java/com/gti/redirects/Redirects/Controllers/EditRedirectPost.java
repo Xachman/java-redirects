@@ -1,8 +1,8 @@
-package com.gti.redirects.Redirects;
+package com.gti.redirects.Redirects.Controllers;
 
 import com.gti.redirects.*;
+import com.gti.redirects.Redirects.Payloads.RedirectPayload;
 import com.gti.redirects.Util.ViewUtil;
-import com.sun.org.apache.regexp.internal.RE;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by xach on 5/16/17.
  */
-public class EditRedirectPost extends AbstractRequest<RedirectPayload> {
+public class EditRedirectPost extends AbstractController<RedirectPayload> {
     private Map<String, Object> templateMap;
     public EditRedirectPost(Model model) {
         super(RedirectPayload.class, model);

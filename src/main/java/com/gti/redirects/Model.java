@@ -11,5 +11,5 @@ public interface Model {
    public List<Map<String, String>> find();
    public List<Map<String, String>> find(int id);
    public boolean save(Map<String, String> data);
-   public boolean delete();
+   public boolean delete(int id);
 }

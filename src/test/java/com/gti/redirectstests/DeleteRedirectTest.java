@@ -2,24 +2,23 @@ package com.gti.redirectstests;
 
 import com.gti.redirects.Answer;
 import com.gti.redirects.Model;
-import com.gti.redirects.Redirects.Controllers.CreateRedirect;
+import com.gti.redirects.Redirects.Controllers.DeleteRedirect;
 import com.gti.redirects.Redirects.Payloads.RedirectPayload;
 import org.easymock.EasyMock;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-
 /**
- * Created by xach on 5/14/17.
+ * Created by xach on 5/17/17.
  */
-public class CreateRedirectTest {
+public class DeleteRedirectTest {
     @Test
     public void createsRedirect() {
-        RedirectPayload crPayload = new RedirectPayload();
+        RedirectEntryPayload crPayload = new RedirectEntryPayload();
         crPayload.setDomain("domain.com");
         crPayload.setRedirect_domain("newdomain.com");
         crPayload.setStatus("301");
@@ -48,18 +47,18 @@ public class CreateRedirectTest {
         EasyMock.expect(model.find()).andReturn(findReturn).times(2);
         EasyMock.replay(model);
 
-        CreateRedirect createRedirect = new CreateRedirect(model);
+        DeleteRedirect createRedirect = new DeleteRedirect(model);
 
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("id", returnHash.get("id"));
-        jsonObject.put("domain", returnHash.get("domain"));
-        jsonObject.put("redirect_domain", returnHash.get("redirect_domain"));
-        jsonObject.put("status", returnHash.get("status"));
-        jsonObject.put("use_path", returnHash.get("use_path"));
+        jsonObject.put("is_deleted", true);
 
-        assertEquals(new Answer(200, jsonObject.toJSONString()), createRedirect.process(crPayload, new HashMap<>(), false));
-        assertEquals(new Answer(200, "Location: /admin/edit-redirect/1"), createRedirect.process(crPayload, new HashMap<>(), true));
+        JSONArray jsonArray = new JSONArray();
+
+        jsonArray.add(jsonObject);
+
+        Assert.assertEquals(new Answer(200, jsonArray.toString()), createRedirect.process(crPayload, new HashMap<>(), false));
     }
 
     @Test
@@ -83,9 +82,9 @@ public class CreateRedirectTest {
         Model model = EasyMock.createNiceMock(Model.class);
 
 
-        CreateRedirect createRedirect = new CreateRedirect(model);
+        DeleteRedirect createRedirect = new DeleteRedirect(model);
 
 
-        assertEquals(new Answer(400), createRedirect.process(crPayload, new HashMap<>(), false));
+        Assert.assertEquals(new Answer(400), createRedirect.process(crPayload, new HashMap<>(), false));
     }
 }

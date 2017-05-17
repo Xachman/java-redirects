@@ -17,14 +17,14 @@ import java.util.Map;
 /**
  * Created by xach on 5/11/17.
  */
-public abstract class AbstractRequest<V extends Validable> implements com.gti.redirects.Request<V>, Route {
+public abstract class AbstractController<V extends Validable> implements com.gti.redirects.Request<V>, Route {
 
     private Class<V> valueClass;
     protected Model model;
 
     private static final int HTTP_BAD_REQUEST = 400;
 
-    public AbstractRequest(Class<V> valueClass, Model model){
+    public AbstractController(Class<V> valueClass, Model model){
         this.valueClass = valueClass;
         this.model = model;
     }

@@ -1,4 +1,4 @@
-package com.gti.redirects.Redirects;
+package com.gti.redirects.Redirects.Models;
 
 import com.github.xachman.Column;
 import com.github.xachman.Table;

@@ -1,15 +1,16 @@
-package com.gti.redirects.Redirects;
+package com.gti.redirects.Redirects.Payloads;
 
+import com.gti.redirects.AbstractValidable;
 import com.gti.redirects.Validable;
 
 /**
  * Created by xach on 5/13/17.
  */
-public class RedirectPayload implements Validable {
-    private String domain;
-    private String status;
-    private String redirect_domain;
-    private int use_path;
+public class RedirectPayload extends AbstractValidable {
+    protected String domain;
+    protected String status;
+    protected String redirect_domain;
+    protected int use_path;
 
     public boolean isValid() {
         return domain != null && !domain.isEmpty() &&

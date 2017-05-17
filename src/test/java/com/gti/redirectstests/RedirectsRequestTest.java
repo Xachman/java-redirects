@@ -3,7 +3,7 @@ package com.gti.redirectstests;
 import com.gti.redirects.Answer;
 import com.gti.redirects.EmptyPayload;
 import com.gti.redirects.Model;
-import com.gti.redirects.Redirects.RedirectsRequest;
+import com.gti.redirects.Redirects.Controllers.RedirectsController;
 import org.easymock.EasyMock;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -64,7 +64,7 @@ public class RedirectsRequestTest {
         EasyMock.expect(model.find()).andReturn(returnFind);
         EasyMock.replay(model);
 
-        RedirectsRequest redirectsRequest = new RedirectsRequest(model);
+        RedirectsController redirectsRequest = new RedirectsController(model);
 
         JSONArray jsonArray = new JSONArray();
 

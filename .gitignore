@@ -7,3 +7,4 @@ out/
 redirects.json
 build/
 .idea/
+classes/

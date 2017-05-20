@@ -17,10 +17,11 @@ import java.util.Map;
  * Created by xach on 5/13/17.
  */
 public class RedirectsModel implements Model {
-    private Table redirectsTable = new RedirectsTable();
+    private Table redirectsTable;
     private SQLiteDatabaseHelper dbh;
 
-    public RedirectsModel( SQLiteDatabaseHelper dbh) {
+    public RedirectsModel( Table table, SQLiteDatabaseHelper dbh) {
+        this.redirectsTable = table;
         this.dbh = dbh;
         this.dbh.createTable(redirectsTable);
         this.dbh.close();

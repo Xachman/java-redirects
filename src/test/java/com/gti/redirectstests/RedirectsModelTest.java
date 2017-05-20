@@ -31,20 +31,19 @@ public class RedirectsModelTest {
                 new Entry(new Column("text", "redirect_domain"), "test2.com"),
                 new Entry(new Column("text", "status"), "301"),
                 new Entry(new Column("int", "use_path"), "0")
-
         ));
         Row row = new Row(entries);
 
         SQLiteDatabaseHelper dbh = EasyMock.createNiceMock(SQLiteDatabaseHelper.class);
         dbh.open();
         EasyMock.expectLastCall();
-        EasyMock.expect(dbh.insert(EasyMock.anyObject(Table.class), new ArrayList<String>(Arrays.asList(null, "test.com", "301", "test2.com", "0")))).andReturn(row);
+        EasyMock.expect(dbh.insert(table, new ArrayList<String>(Arrays.asList(null, "test.com", "301", "test2.com", "0")))).andReturn(row);
         dbh.close();
         EasyMock.expectLastCall();
 
         EasyMock.replay(dbh);
 
-        RedirectsModel model = new RedirectsModel(dbh);
+        RedirectsModel model = new RedirectsModel(table, dbh);
         boolean save = model.save(map);
         System.out.println(save);
 

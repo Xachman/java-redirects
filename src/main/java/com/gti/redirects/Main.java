@@ -9,6 +9,7 @@ import com.gti.redirects.Redirects.*;
 import com.gti.redirects.Redirects.Controllers.CreateRedirect;
 import com.gti.redirects.Redirects.Controllers.RedirectsController;
 import com.gti.redirects.Redirects.Models.RedirectsModel;
+import com.gti.redirects.Redirects.Models.RedirectsTable;
 import spark.Spark;
 
 import java.util.Base64;
@@ -43,7 +44,7 @@ public class Main {
 			}
 		});
 
-		RedirectsModel redirectsModel = new RedirectsModel( new SQLiteDatabaseHelper(System.getProperty("user.dir")+"/database.db"));
+		RedirectsModel redirectsModel = new RedirectsModel(new RedirectsTable(), new SQLiteDatabaseHelper(System.getProperty("user.dir")+"/database.db"));
 		get("/admin/create-redirect", RedirectsControllerOld.serveCreateRedirect);
 		post("/admin/create-redirect", new CreateRedirect(redirectsModel));
 		get("/admin/redirects", new RedirectsController(redirectsModel));

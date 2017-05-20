@@ -4,6 +4,7 @@ import static spark.Spark.before;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import com.github.xachman.SQLiteDatabaseHelper;
 import com.gti.redirects.Redirects.*;
 import com.gti.redirects.Redirects.Controllers.CreateRedirect;
 import com.gti.redirects.Redirects.Controllers.RedirectsController;
@@ -42,7 +43,7 @@ public class Main {
 			}
 		});
 
-		RedirectsModel redirectsModel = new RedirectsModel();
+		RedirectsModel redirectsModel = new RedirectsModel( new SQLiteDatabaseHelper(System.getProperty("user.dir")+"/database.db"));
 		get("/admin/create-redirect", RedirectsControllerOld.serveCreateRedirect);
 		post("/admin/create-redirect", new CreateRedirect(redirectsModel));
 		get("/admin/redirects", new RedirectsController(redirectsModel));

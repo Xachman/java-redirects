@@ -1,10 +1,11 @@
 package com.gti.redirectstests;
 
+import com.github.xachman.Column;
 import com.gti.redirects.Answer;
+import com.gti.redirects.Database.RedirectsTable;
 import com.gti.redirects.Model;
 import com.gti.redirects.Redirects.Controllers.DeleteRedirect;
 import com.gti.redirects.Redirects.Payloads.DeleteRedirectPayload;
-import com.gti.redirects.Redirects.Payloads.RedirectPayload;
 import org.easymock.EasyMock;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -57,5 +58,30 @@ public class DeleteRedirectTest {
 
 
         Assert.assertEquals(new Answer(400), createRedirect.process(deletePayload, new HashMap<>(), false));
+    }
+
+    /**
+     * Created by xach on 5/10/17.
+     */
+    public static class RedirectsTableTest {
+        @Test
+        public void testColumns() {
+            List<Column> columns = new ArrayList<>(Arrays.asList(
+                new Column("integer", "id", true, true),
+                new Column("text", "domain"),
+                new Column("int", "status"),
+                new Column("text","redirect_to"),
+                new Column("int", "follow_path")
+            ));
+
+            Assert.assertEquals(new RedirectsTable().columns().size(), columns.size());
+
+            int count = 0;
+            for(Column column: columns) {
+                Assert.assertEquals(new RedirectsTable().columns().get(count).name(), column.name());
+                Assert.assertEquals(new RedirectsTable().columns().get(count).type(), column.type());
+                count++;
+            }
+        }
     }
 }

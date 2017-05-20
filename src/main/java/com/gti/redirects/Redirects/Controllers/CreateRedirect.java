@@ -37,7 +37,8 @@ public class CreateRedirect extends AbstractController<RedirectPayload> {
         if(shouldReturnHtml) {
             map.put("content", "create-edit-redirect/layout.hbs");
             map.put("redirect", redirect);
-            return new Answer(200, "Location: /admin/edit-redirect/"+redirect.get("id"));
+            System.out.println("test");
+            return new Answer(200, "Location: /admin/edit-redirect/1");
         }
 
         JSONObject jsonObject = new JSONObject();

@@ -1,4 +1,4 @@
-package com.gti.redirects.Redirects.Models;
+package com.gti.redirectstests.Database.Mocks;
 
 import com.github.xachman.Column;
 import com.github.xachman.Table;
@@ -8,9 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by xach on 5/13/17.
+ * Created by xach on 5/20/17.
  */
-public class RedirectsTable extends Table {
+public class MockTable extends Table {
     @Override
     public List<Column> columns() {
         List<Column> columns = new ArrayList<>(Arrays.asList(

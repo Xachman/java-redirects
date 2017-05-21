@@ -1,17 +1,11 @@
 package com.gti.redirects.Redirects.Models;
 
-import com.github.xachman.Column;
-import com.github.xachman.Row;
-import com.github.xachman.SQLiteDatabaseHelper;
-import com.github.xachman.Table;
+import com.github.xachman.*;
 import com.gti.redirects.Model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by xach on 5/13/17.
@@ -37,7 +31,10 @@ public class RedirectsModel implements Model {
 
     @Override
     public List<Map<String, Object>> find(int id) {
-        return null;
+        dbh.open();
+            List<Map<String, Object>> output = convertRows(new ArrayList<>(Arrays.asList(dbh.getRowById(redirectsTable, id))));
+        dbh.close();
+        return output;
     }
 
     @Override
@@ -75,12 +72,13 @@ public class RedirectsModel implements Model {
     private List<Map<String, Object>> convertRows(List<Row> rows) {
 
         List<Map<String, Object>> list = new ArrayList<>();
-        int index = 0;
+
         for(Row row : rows) {
-           Map<String, Object> map = new HashMap<>();
-           map.put(row.getEntry(index).getColumn().name(), row.getEntry(index).getValue());
-           list.add(map);
-           index++;
+            Map<String, Object> map = new HashMap<>();
+            for(Entry entry: row.getEntries()) {
+                map.put(entry.getColumn().name(), entry.getValue());
+            }
+            list.add(map);
         }
 
         return list;

@@ -171,4 +171,31 @@ public class RedirectsModelTest {
         Assert.assertEquals(returnList.get(0).get("status"), row2.getEntry(3).getValue().toString());
         Assert.assertEquals(returnList.get(0).get("use_path"), row2.getEntry(4).getValue().toString());
     }
+
+
+    @Test
+    public void deleteById() {
+        MockTable table = new MockTable();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("domain", "test.com");
+        map.put("redirect_domain", "test2.com");
+        map.put("status", "301");
+        map.put("use_path", "0");
+
+        SQLiteDatabaseHelper dbh = EasyMock.createNiceMock(SQLiteDatabaseHelper.class);
+        dbh.open();
+        EasyMock.expectLastCall();
+        EasyMock.expect(dbh.removeById(table, 2)).andReturn(true);
+        dbh.close();
+        EasyMock.expectLastCall();
+
+        EasyMock.replay(dbh);
+
+        RedirectsModel model = new RedirectsModel(table, dbh);
+        Assert.assertTrue(model.delete(2));
+
+        EasyMock.verify(dbh);
+
+    }
 }

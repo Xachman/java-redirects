@@ -66,7 +66,10 @@ public class RedirectsModel implements Model {
 
     @Override
     public boolean delete(int id) {
-        return false;
+        dbh.open();
+        dbh.removeById(redirectsTable, 2);
+        dbh.close();
+        return true;
     }
 
     private List<Map<String, Object>> convertRows(List<Row> rows) {

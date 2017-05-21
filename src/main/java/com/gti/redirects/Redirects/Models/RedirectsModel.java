@@ -79,6 +79,7 @@ public class RedirectsModel implements Model {
         for(Row row : rows) {
            Map<String, Object> map = new HashMap<>();
            map.put(row.getEntry(index).getColumn().name(), row.getEntry(index).getValue());
+           list.add(map);
            index++;
         }
 

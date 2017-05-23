@@ -27,11 +27,12 @@ public class EditRedirectPost extends AbstractController<RedirectPayload> {
         saveVals.put("status", value.getStatus());
         saveVals.put("use_path", value.getUse_path());
 
-        model.update(Integer.parseInt(queryParams.get(":id").toString()), saveVals);
-        List<Map<String, Object>> redirects = model.find(Integer.parseInt(queryParams.get(":id").toString()));
+        List<Map<String, Object>> redirects = model.update(Integer.parseInt(queryParams.get(":id").toString()), saveVals);
         if(shouldReturnHtml) {
-            map.put("redirect", redirects);
-            map.put("content", "redirects/layout.hbs");
+            map.put("title", "Edit Redirect");
+            redirects.get(0).put("use_path_"+redirects.get(0).get("use_path").toString(), "1");
+            map.put("redirect", redirects.get(0));
+            map.put("content", "create-edit-redirect/layout.hbs");
             return Answer.ok(ViewUtil.render(map, "layout.hbs"));
         } else {
 

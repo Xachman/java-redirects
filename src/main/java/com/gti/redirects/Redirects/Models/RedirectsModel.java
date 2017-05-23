@@ -63,6 +63,8 @@ public class RedirectsModel implements Model {
         for (Map.Entry<String, Object> entry : data.entrySet()) {
             if(entry.getValue() instanceof String){
                 newMap.put(entry.getKey(), (String) entry.getValue());
+            }else if(entry.getValue() instanceof Integer) {
+                newMap.put(entry.getKey(), Integer.toString((int) entry.getValue()));
             }
         }
 

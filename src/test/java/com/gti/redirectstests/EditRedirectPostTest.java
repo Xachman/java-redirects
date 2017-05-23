@@ -43,15 +43,21 @@ public class EditRedirectPostTest {
         payload.setUse_path(0);
         Assert.assertTrue(payload.isValid());
 
+        Map<String, Object> map = new HashMap<>();
+        map.put("domain", "domain.com");
+        map.put("redirect_domain", "newdomain.com");
+        map.put("status", "301");
+        map.put("use_path", 0);
+
         Model model = EasyMock.createNiceMock(Model.class);
         EasyMock.expect(model.save(returnFind.get(0))).andReturn(true);
-        EasyMock.expect(model.find(3)).andReturn(returnFind);
+        EasyMock.expect(model.update(3, map)).andReturn(returnFind);
         EasyMock.replay(model);
 
         EditRedirectPost editRedirectPost = new EditRedirectPost(model);
 
-        Map<String, String> map = new HashMap<>();
-        map.put(":id", "3");
+        Map<String, String> mapParam = new HashMap<>();
+        mapParam.put(":id", "3");
 
         JSONArray jsonArray = new JSONArray();
         for(Map<String, Object> mapFind : returnFind) {
@@ -67,7 +73,7 @@ public class EditRedirectPostTest {
 
         }
 
-        Assert.assertEquals(new Answer(200 , jsonArray.toString()), editRedirectPost.process(payload, map, false));
+        Assert.assertEquals(new Answer(200 , jsonArray.toString()), editRedirectPost.process(payload, mapParam, false));
 
     }
 }

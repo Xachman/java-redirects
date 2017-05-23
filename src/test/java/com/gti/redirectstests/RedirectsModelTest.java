@@ -212,7 +212,7 @@ public class RedirectsModelTest {
         map.put("domain", "test2.com");
         map.put("redirect_domain", "test3.com");
         map.put("status", "404");
-        map.put("use_path", "1");
+        map.put("use_path", 1);
 
         Map<String, String> mapParams = new HashMap<>();
         mapParams.put("domain", "test2.com");

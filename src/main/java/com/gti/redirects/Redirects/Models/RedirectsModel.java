@@ -39,12 +39,7 @@ public class RedirectsModel implements Model {
 
     @Override
     public boolean save(Map<String, Object> data) {
-        Map<String,String> newMap =new HashMap<String,String>();
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            if(entry.getValue() instanceof String){
-                newMap.put(entry.getKey(), (String) entry.getValue());
-            }
-        }
+        Map<String,String> newMap = convertObjectMapToString(data);
 
         dbh.open();
         Row row = dbh.insert(redirectsTable, newMap);
@@ -59,14 +54,7 @@ public class RedirectsModel implements Model {
 
     @Override
     public List<Map<String, Object>> update(int id, Map<String, Object> data) {
-        Map<String,String> newMap =new HashMap<String,String>();
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            if(entry.getValue() instanceof String){
-                newMap.put(entry.getKey(), (String) entry.getValue());
-            }else if(entry.getValue() instanceof Integer) {
-                newMap.put(entry.getKey(), Integer.toString((int) entry.getValue()));
-            }
-        }
+        Map<String,String> newMap = convertObjectMapToString(data);
 
         dbh.open();
         Row row = dbh.updateById(redirectsTable, id, newMap);
@@ -98,5 +86,17 @@ public class RedirectsModel implements Model {
 
         return list;
 
+    }
+
+    private Map<String, String> convertObjectMapToString(Map<String, Object> data) {
+        Map<String,String> newMap =new HashMap<String,String>();
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            if(entry.getValue() instanceof String){
+                newMap.put(entry.getKey(), (String) entry.getValue());
+            }else if(entry.getValue() instanceof Integer) {
+                newMap.put(entry.getKey(), Integer.toString((int) entry.getValue()));
+            }
+        }
+        return newMap;
     }
 }

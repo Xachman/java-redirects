@@ -67,7 +67,6 @@ public abstract class AbstractController<V extends Validable> implements com.gti
             ObjectMapper objectMapper = new ObjectMapper();
             QueryParamUtil qUtil = new QueryParamUtil(request.body());
             V value = null;
-            System.out.println(request.body());
             if (valueClass != EmptyPayload.class) {
                 value = objectMapper.readValue(qUtil.toJson(), valueClass);
             }

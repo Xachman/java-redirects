@@ -99,7 +99,6 @@ public class RedirectStorage implements StorageI {
     }
     private JSONArray parseFile() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        System.out.println(jsonFile.getPath());
         return (JSONArray) parser.parse(new FileReader(jsonFile.getPath()));
     }
 

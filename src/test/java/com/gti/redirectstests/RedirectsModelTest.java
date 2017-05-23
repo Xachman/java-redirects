@@ -42,7 +42,7 @@ public class RedirectsModelTest {
                 new Entry(new Column("text", "status"), "404"),
                 new Entry(new Column("int", "use_path"), "1")
         ));
-        row2 = new Row(entries);
+        row2 = new Row(entries2);
 
         entries3 = new ArrayList<>(Arrays.asList(
                 new Entry(new Column("integer","id"), "3"),
@@ -51,7 +51,7 @@ public class RedirectsModelTest {
                 new Entry(new Column("text", "status"), "401"),
                 new Entry(new Column("int", "use_path"), "0")
         ));
-        row3 = new Row(entries);
+        row3 = new Row(entries3);
 
     }
     @Test
@@ -91,7 +91,6 @@ public class RedirectsModelTest {
 
         RedirectsModel model = new RedirectsModel(table, dbh);
         boolean save = model.save(map);
-        System.out.println(save);
 
 
 
@@ -203,6 +202,42 @@ public class RedirectsModelTest {
         Assert.assertTrue(model.delete(2));
 
         EasyMock.verify(dbh);
+    }
 
+    @Test
+    public void updateById() {
+        MockTable table = new MockTable();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("domain", "test2.com");
+        map.put("redirect_domain", "test3.com");
+        map.put("status", "404");
+        map.put("use_path", "1");
+
+        Map<String, String> mapParams = new HashMap<>();
+        mapParams.put("domain", "test2.com");
+        mapParams.put("redirect_domain", "test3.com");
+        mapParams.put("status", "404");
+        mapParams.put("use_path", "1");
+
+        SQLiteDatabaseHelper dbh = EasyMock.createNiceMock(SQLiteDatabaseHelper.class);
+        dbh.open();
+        EasyMock.expectLastCall();
+        EasyMock.expect(dbh.updateById(table, 2, mapParams)).andReturn(row2);
+        dbh.close();
+        EasyMock.expectLastCall();
+
+        EasyMock.replay(dbh);
+
+        RedirectsModel model = new RedirectsModel(table, dbh);
+        List<Map<String, Object>> returnList = model.update(2, map);
+
+        EasyMock.verify(dbh);
+
+        Assert.assertEquals(returnList.get(0).get("id").toString(), row2.getEntry(0).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("domain").toString(), row2.getEntry(1).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("redirect_domain").toString(), row2.getEntry(2).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("status").toString(), row2.getEntry(3).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("use_path").toString(), row2.getEntry(4).getValue().toString());
     }
 }

@@ -36,7 +36,6 @@ public class Main {
 			if(!authenticated) {
 				response.header("WWW-Authenticate", "Basic realm=\"Restricted\"");
 				response.status(401);
-				System.out.println(request.pathInfo());
 				if(!request.pathInfo().equals("/admin/login")) {
 					response.redirect("/admin/login");
 				}

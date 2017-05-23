@@ -32,7 +32,6 @@ public class RedirectsModel implements Model {
     @Override
     public List<Map<String, Object>> find(int id) {
         dbh.open();
-        System.out.println(id);
             List<Map<String, Object>> output = convertRows(new ArrayList<>(Arrays.asList(dbh.getRowById(redirectsTable, id))));
         dbh.close();
         return output;
@@ -51,7 +50,6 @@ public class RedirectsModel implements Model {
         Row row = dbh.insert(redirectsTable, newMap);
         dbh.close();
 
-        System.out.println(row);
 
         if(row != null) {
             return true;
@@ -72,7 +70,6 @@ public class RedirectsModel implements Model {
         Row row = dbh.updateById(redirectsTable, id, newMap);
         dbh.close();
 
-        System.out.println(row);
         List<Map<String, Object>> returnList = new ArrayList<>(convertRows(Arrays.asList(row)));
         return returnList;
     }
@@ -89,9 +86,9 @@ public class RedirectsModel implements Model {
 
         List<Map<String, Object>> list = new ArrayList<>();
         for(Row row : rows) {
+            if(row == null) continue;
             Map<String, Object> map = new HashMap<>();
             for(Entry entry: row.getEntries()) {
-                System.out.println(entry.getValue().toString());
                 map.put(entry.getColumn().name(), entry.getValue());
             }
             list.add(map);

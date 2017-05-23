@@ -32,6 +32,7 @@ public class RedirectsModel implements Model {
     @Override
     public List<Map<String, Object>> find(int id) {
         dbh.open();
+        System.out.println(id);
             List<Map<String, Object>> output = convertRows(new ArrayList<>(Arrays.asList(dbh.getRowById(redirectsTable, id))));
         dbh.close();
         return output;
@@ -39,21 +40,15 @@ public class RedirectsModel implements Model {
 
     @Override
     public boolean save(Map<String, Object> data) {
-
-        ArrayList<String> values = new ArrayList<>();
-
-        for(Column column: redirectsTable.columns()) {
-            try {
-                values.add(data.get(column.name()).toString());
-            } catch (NullPointerException e) {
-                values.add(null);
+        Map<String,String> newMap =new HashMap<String,String>();
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            if(entry.getValue() instanceof String){
+                newMap.put(entry.getKey(), (String) entry.getValue());
             }
         }
 
-        System.out.println(values);
-
         dbh.open();
-        Row row = dbh.insert(redirectsTable, values);
+        Row row = dbh.insert(redirectsTable, newMap);
         dbh.close();
 
         System.out.println(row);
@@ -62,6 +57,24 @@ public class RedirectsModel implements Model {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Map<String, Object>> update(int id, Map<String, Object> data) {
+        Map<String,String> newMap =new HashMap<String,String>();
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            if(entry.getValue() instanceof String){
+                newMap.put(entry.getKey(), (String) entry.getValue());
+            }
+        }
+
+        dbh.open();
+        Row row = dbh.updateById(redirectsTable, id, newMap);
+        dbh.close();
+
+        System.out.println(row);
+        List<Map<String, Object>> returnList = new ArrayList<>(convertRows(Arrays.asList(row)));
+        return returnList;
     }
 
     @Override
@@ -75,10 +88,10 @@ public class RedirectsModel implements Model {
     private List<Map<String, Object>> convertRows(List<Row> rows) {
 
         List<Map<String, Object>> list = new ArrayList<>();
-
         for(Row row : rows) {
             Map<String, Object> map = new HashMap<>();
             for(Entry entry: row.getEntries()) {
+                System.out.println(entry.getValue().toString());
                 map.put(entry.getColumn().name(), entry.getValue());
             }
             list.add(map);

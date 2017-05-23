@@ -76,7 +76,14 @@ public class RedirectsModelTest {
         SQLiteDatabaseHelper dbh = EasyMock.createNiceMock(SQLiteDatabaseHelper.class);
         dbh.open();
         EasyMock.expectLastCall();
-        EasyMock.expect(dbh.insert(table, new ArrayList<String>(Arrays.asList(null, "test.com", "301", "test2.com", "0")))).andReturn(row);
+
+        Map<String, String> mapInsert = new HashMap<>();
+        mapInsert.put("domain", "test.com");
+        mapInsert.put("status", "301");
+        mapInsert.put("redirect_domain", "test2.com");
+        mapInsert.put("use_path", "0");
+
+        EasyMock.expect(dbh.insert(table, mapInsert)).andReturn(row);
         dbh.close();
         EasyMock.expectLastCall();
 
@@ -123,23 +130,23 @@ public class RedirectsModelTest {
         List<Map<String, Object>> returnList = model.find();
 
         EasyMock.verify(dbh);
-        Assert.assertEquals(returnList.get(0).get("id"), row.getEntry(0).getValue().toString());
-        Assert.assertEquals(returnList.get(0).get("domain"), row.getEntry(1).getValue().toString());
-        Assert.assertEquals(returnList.get(0).get("redirect_domain"), row.getEntry(2).getValue().toString());
-        Assert.assertEquals(returnList.get(0).get("status"), row.getEntry(3).getValue().toString());
-        Assert.assertEquals(returnList.get(0).get("use_path"), row.getEntry(4).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("id").toString(), row.getEntry(0).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("domain").toString(), row.getEntry(1).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("redirect_domain").toString(), row.getEntry(2).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("status").toString(), row.getEntry(3).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("use_path").toString(), row.getEntry(4).getValue().toString());
 
-        Assert.assertEquals(returnList.get(1).get("id"), row2.getEntry(0).getValue().toString());
-        Assert.assertEquals(returnList.get(1).get("domain"), row2.getEntry(1).getValue().toString());
-        Assert.assertEquals(returnList.get(1).get("redirect_domain"), row2.getEntry(2).getValue().toString());
-        Assert.assertEquals(returnList.get(1).get("status"), row2.getEntry(3).getValue().toString());
-        Assert.assertEquals(returnList.get(1).get("use_path"), row2.getEntry(4).getValue().toString());
+        Assert.assertEquals(returnList.get(1).get("id").toString(), row2.getEntry(0).getValue().toString());
+        Assert.assertEquals(returnList.get(1).get("domain").toString(), row2.getEntry(1).getValue().toString());
+        Assert.assertEquals(returnList.get(1).get("redirect_domain").toString(), row2.getEntry(2).getValue().toString());
+        Assert.assertEquals(returnList.get(1).get("status").toString(), row2.getEntry(3).getValue().toString());
+        Assert.assertEquals(returnList.get(1).get("use_path").toString(), row2.getEntry(4).getValue().toString());
 
-        Assert.assertEquals(returnList.get(2).get("id"), row3.getEntry(0).getValue().toString());
-        Assert.assertEquals(returnList.get(2).get("domain"), row3.getEntry(1).getValue().toString());
-        Assert.assertEquals(returnList.get(2).get("redirect_domain"), row3.getEntry(2).getValue().toString());
-        Assert.assertEquals(returnList.get(2).get("status"), row3.getEntry(3).getValue().toString());
-        Assert.assertEquals(returnList.get(2).get("use_path"), row3.getEntry(4).getValue().toString());
+        Assert.assertEquals(returnList.get(2).get("id").toString(), row3.getEntry(0).getValue().toString());
+        Assert.assertEquals(returnList.get(2).get("domain").toString(), row3.getEntry(1).getValue().toString());
+        Assert.assertEquals(returnList.get(2).get("redirect_domain").toString(), row3.getEntry(2).getValue().toString());
+        Assert.assertEquals(returnList.get(2).get("status").toString(), row3.getEntry(3).getValue().toString());
+        Assert.assertEquals(returnList.get(2).get("use_path").toString(), row3.getEntry(4).getValue().toString());
     }
 
     @Test
@@ -165,11 +172,11 @@ public class RedirectsModelTest {
         List<Map<String, Object>> returnList = model.find(2);
 
         EasyMock.verify(dbh);
-        Assert.assertEquals(returnList.get(0).get("id"), row2.getEntry(0).getValue().toString());
-        Assert.assertEquals(returnList.get(0).get("domain"), row2.getEntry(1).getValue().toString());
-        Assert.assertEquals(returnList.get(0).get("redirect_domain"), row2.getEntry(2).getValue().toString());
-        Assert.assertEquals(returnList.get(0).get("status"), row2.getEntry(3).getValue().toString());
-        Assert.assertEquals(returnList.get(0).get("use_path"), row2.getEntry(4).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("id").toString(), row2.getEntry(0).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("domain").toString(), row2.getEntry(1).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("redirect_domain").toString(), row2.getEntry(2).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("status").toString(), row2.getEntry(3).getValue().toString());
+        Assert.assertEquals(returnList.get(0).get("use_path").toString(), row2.getEntry(4).getValue().toString());
     }
 
 

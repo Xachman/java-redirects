@@ -46,7 +46,7 @@ public class EditRedirectTest {
         EditRedirectDisplay editRedirectDisplay = new EditRedirectDisplay(model);
 
         Map<String, String> map = new HashMap<>();
-        map.put("id", "3");
+        map.put(":id", "3");
 
         JSONArray jsonArray = new JSONArray();
         for(Map<String, Object> mapFind : returnFind) {

@@ -5,7 +5,7 @@
         <div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Create Redirect</h1>
+				<h1 class="page-header">{{title}}</h1>
 			</div>
 			<!-- /.col-lg-12 -->
 		</div>
@@ -26,12 +26,19 @@
 									</div>
 									<div class="form-group">
 										<label>Status</label>
-										<input type="text" name="status"  class="form-control" value="{{redirect.type}}">
+										<input type="text" name="status"  class="form-control" value="{{redirect.status}}">
 									</div>
 									<div class="form-group">
 										<label>Redirect Domain</label>
-										<input type="text" name="redirect_domain" class="form-control" value="{{redirect.redirect_to}}">
+										<input type="text" name="redirect_domain" class="form-control" value="{{redirect.redirect_domain}}">
 									</div>
+                                    <div class="form-group">
+                                        <label>Use Path</label>
+                                        <select name="use_path">
+                                            <option value="0" {{#if redirect.use_path_0}}selected="selected"{{/if}}>Dont Follow Path</option>
+                                            <option value="1" {{#if redirect.use_path_1}}selected="seleted"{{/if}}>Follow Path{{redirect.use_path}}</option>
+                                        </select>
+                                    </div>
 									<button class="btn btn-primary" >Submit</button>
 								</form>
 							</div>

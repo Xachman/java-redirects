@@ -6,8 +6,7 @@ import static spark.Spark.post;
 
 import com.github.xachman.SQLiteDatabaseHelper;
 import com.gti.redirects.Redirects.*;
-import com.gti.redirects.Redirects.Controllers.CreateRedirect;
-import com.gti.redirects.Redirects.Controllers.RedirectsController;
+import com.gti.redirects.Redirects.Controllers.*;
 import com.gti.redirects.Redirects.Models.RedirectsModel;
 import com.gti.redirects.Redirects.Models.RedirectsTable;
 import spark.Spark;
@@ -48,8 +47,9 @@ public class Main {
 		get("/admin/create-redirect", RedirectsControllerOld.serveCreateRedirect);
 		post("/admin/create-redirect", new CreateRedirect(redirectsModel));
 		get("/admin/redirects", new RedirectsController(redirectsModel));
-		get("/admin/edit-redirect/:id", RedirectsControllerOld.serveEditRedirect);
-		get("/admin/delete-redirect/:id", RedirectsControllerOld.serveDeleteRedirect);
+		get("/admin/edit-redirect/:id", new EditRedirectDisplay(redirectsModel));
+		post("/admin/edit-redirect/:id", new EditRedirectPost(redirectsModel));
+		get("/admin/delete-redirect/:id", new DeleteRedirect(redirectsModel));
 		get("/admin/login", (request, response) -> "login");
 		get("/", RedirectsControllerOld.serveRedirect);
 	}

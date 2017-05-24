@@ -19,7 +19,7 @@ public class RedirectsController<V extends Validable> extends AbstractController
     }
 
     @Override
-    protected Answer processImpl(Validable value, Map queryParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(Validable value, Map queryParams, Map requestParams, boolean shouldReturnHtml) {
         List<Map<String, Object>> redirects = model.find();
         if(shouldReturnHtml) {
             Map map = new HashMap();

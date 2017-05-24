@@ -80,6 +80,6 @@ public class RedirectsRequestTest {
             jsonArray.add(jsonObject);
         }
 
-        Assert.assertEquals(new Answer(200 , jsonArray.toString()), redirectsRequest.process(emptyPayload, new HashMap<>(), false));
+        Assert.assertEquals(new Answer(200 , jsonArray.toString()), redirectsRequest.process(emptyPayload, new HashMap<>(),new HashMap<>(), false));
     }
 }

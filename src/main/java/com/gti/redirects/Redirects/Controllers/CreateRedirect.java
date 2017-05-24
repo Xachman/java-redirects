@@ -20,7 +20,7 @@ public class CreateRedirect extends AbstractController<RedirectPayload> {
     }
 
     @Override
-    protected Answer processImpl(RedirectPayload value, Map queryParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(RedirectPayload value, Map queryParams, Map requestParams, boolean shouldReturnHtml) {
         Map map = new HashMap();
 
         Map saveVals = new HashMap();
@@ -29,15 +29,14 @@ public class CreateRedirect extends AbstractController<RedirectPayload> {
         saveVals.put("status", value.getStatus());
         saveVals.put("use_path", value.getUse_path());
 
-        model.save(saveVals);
-
-        List<Map<String, Object>> savedValue = model.find();
+        List<Map<String, Object>> savedValue = model.save(saveVals);
 
         Map <String, Object> redirect = savedValue.get(0);
         if(shouldReturnHtml) {
             map.put("content", "create-edit-redirect/layout.hbs");
             map.put("redirect", redirect);
-            return new Answer(200, "Location: /admin/edit-redirect/1");
+            headers.put("Location", "/admin/edit-redirect/"+redirect.get("id"));
+            return new Answer(302, "");
         }
 
         JSONObject jsonObject = new JSONObject();

@@ -2,6 +2,7 @@ package com.gti.redirects.Redirects.Controllers;
 
 import com.gti.redirects.AbstractController;
 import com.gti.redirects.Answer;
+import com.gti.redirects.EmptyPayload;
 import com.gti.redirects.Model;
 import com.gti.redirects.Redirects.Payloads.DeleteRedirectPayload;
 
@@ -20,7 +21,7 @@ public class DeleteRedirect extends AbstractController<DeleteRedirectPayload> {
     }
 
     @Override
-    protected Answer processImpl(DeleteRedirectPayload value, Map queryParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(DeleteRedirectPayload value, Map queryParams, Map requestParams, boolean shouldReturnHtml) {
         Map<String, String> map = new HashMap<>();
         int id = Integer.parseInt(value.getId());
         boolean isDeleted = model.delete(id);
@@ -42,4 +43,5 @@ public class DeleteRedirect extends AbstractController<DeleteRedirectPayload> {
 
         return new Answer(200,dataToJson(outputList));
     }
+
 }

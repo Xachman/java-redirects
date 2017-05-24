@@ -50,7 +50,6 @@ public class EditRedirectPostTest {
         map.put("use_path", 0);
 
         Model model = EasyMock.createNiceMock(Model.class);
-        EasyMock.expect(model.save(returnFind.get(0))).andReturn(true);
         EasyMock.expect(model.update(3, map)).andReturn(returnFind);
         EasyMock.replay(model);
 
@@ -72,8 +71,8 @@ public class EditRedirectPostTest {
             jsonArray.add(jsonObject);
 
         }
-
-        Assert.assertEquals(new Answer(200 , jsonArray.toString()), editRedirectPost.process(payload, mapParam, false));
+        EasyMock.verify(model);
+        Assert.assertEquals(new Answer(200 , jsonArray.toString()), editRedirectPost.process(payload, mapParam, new HashMap<>(), false));
 
     }
 }

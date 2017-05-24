@@ -11,6 +11,7 @@ import spark.Response;
 import spark.Route;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ public abstract class AbstractController<V extends Validable> implements com.gti
 
     private Class<V> valueClass;
     protected Model model;
+    protected Map<String, String> headers = new HashMap<>();
 
     private static final int HTTP_BAD_REQUEST = 400;
 
@@ -50,15 +52,15 @@ public abstract class AbstractController<V extends Validable> implements com.gti
         return jsonArray.toString();
     }
 
-    public final Answer process(V value, Map<String, String> queryParams, boolean shouldReturnHtml) {
+    public final Answer process(V value, Map<String, String> queryParams, Map<String, String> requestParams, boolean shouldReturnHtml) {
         if (value != null && !value.isValid()) {
             return new Answer(HTTP_BAD_REQUEST);
         } else {
-            return processImpl(value, queryParams, shouldReturnHtml);
+            return processImpl(value, queryParams, requestParams, shouldReturnHtml);
         }
     }
 
-    protected abstract Answer processImpl(V value, Map<String, String> queryParams, boolean shouldReturnHtml);
+    protected abstract Answer processImpl(V value, Map<String, String> queryParams, Map<String, String> requestParams, boolean shouldReturnHtml);
 
 
     @Override
@@ -71,8 +73,16 @@ public abstract class AbstractController<V extends Validable> implements com.gti
                 value = objectMapper.readValue(qUtil.toJson(), valueClass);
             }
             Map<String, String> urlParams = request.params();
-            Answer answer = process(value, urlParams, shouldReturnHtml(request));
+            Map<String, String> requestParams = new HashMap<>();
+            requestParams.put("host", request.host());
+            Answer answer = process(value, urlParams, requestParams, shouldReturnHtml(request));
             response.status(answer.getCode());
+            if(headers.size() > 0) {
+                for(Map.Entry entry: headers.entrySet()) {
+                    response.header(entry.getKey().toString(), entry.getValue().toString());
+                    System.out.println(headers);
+                }
+            }
             if (shouldReturnHtml(request)) {
                 response.type("text/html");
             } else {
@@ -87,4 +97,5 @@ public abstract class AbstractController<V extends Validable> implements com.gti
             return e.getMessage();
         }
     }
+
 }

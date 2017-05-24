@@ -38,7 +38,7 @@ public class RedirectsModel implements Model {
     }
 
     @Override
-    public boolean save(Map<String, Object> data) {
+    public List<Map<String, Object>> save(Map<String, Object> data) {
         Map<String,String> newMap = convertObjectMapToString(data);
 
         dbh.open();
@@ -46,10 +46,8 @@ public class RedirectsModel implements Model {
         dbh.close();
 
 
-        if(row != null) {
-            return true;
-        }
-        return false;
+        List<Map<String, Object>> returnList = new ArrayList<>(convertRows(Arrays.asList(row)));
+        return returnList;
     }
 
     @Override

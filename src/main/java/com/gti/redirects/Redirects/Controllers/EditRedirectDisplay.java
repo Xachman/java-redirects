@@ -17,7 +17,7 @@ public class EditRedirectDisplay extends AbstractController<EmptyPayload> {
     }
 
     @Override
-    protected Answer processImpl(EmptyPayload value, Map<String, String> queryParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(EmptyPayload value, Map queryParams, Map requestParams, boolean shouldReturnHtml) {
         int id = Integer.parseInt(queryParams.get(":id").toString());
         List<Map<String, Object>> redirects = model.find(id);
         if(shouldReturnHtml) {

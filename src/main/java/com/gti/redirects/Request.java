@@ -7,5 +7,5 @@ import java.util.Map;
  */
 public interface Request<V extends Validable> {
 
-    Answer process(V value, Map<String, String> urlParams, boolean shouldReturnHtml);
+    Answer process(V value, Map<String, String> urlParams, Map<String, String> requestParams, boolean shouldReturnHtml);
 }

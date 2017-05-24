@@ -18,7 +18,7 @@ public class EditRedirectPost extends AbstractController<RedirectPayload> {
     }
 
     @Override
-    protected Answer processImpl(RedirectPayload value, Map queryParams, boolean shouldReturnHtml) {
+    protected Answer processImpl(RedirectPayload value, Map queryParams, Map requestParams, boolean shouldReturnHtml) {
         Map map = new HashMap();
 
         Map saveVals = new HashMap();
@@ -27,6 +27,7 @@ public class EditRedirectPost extends AbstractController<RedirectPayload> {
         saveVals.put("status", value.getStatus());
         saveVals.put("use_path", value.getUse_path());
 
+        System.out.println(Integer.parseInt(queryParams.get(":id").toString()));
         List<Map<String, Object>> redirects = model.update(Integer.parseInt(queryParams.get(":id").toString()), saveVals);
         if(shouldReturnHtml) {
             map.put("title", "Edit Redirect");

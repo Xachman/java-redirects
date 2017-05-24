@@ -90,14 +90,16 @@ public class RedirectsModelTest {
         EasyMock.replay(dbh);
 
         RedirectsModel model = new RedirectsModel(table, dbh);
-        boolean save = model.save(map);
+        List<Map<String, Object>> save = model.save(map);
 
 
 
         EasyMock.verify(dbh);
 
-        Assert.assertTrue(save);
-
+        Assert.assertEquals("test.com", save.get(0).get("domain").toString());
+        Assert.assertEquals("301", save.get(0).get("status").toString());
+        Assert.assertEquals("test2.com", save.get(0).get("redirect_domain").toString());
+        Assert.assertEquals("0", save.get(0).get("use_path").toString());
     }
 
     @Test

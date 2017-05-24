@@ -62,7 +62,7 @@ public class EditRedirectTest {
 
         }
 
-        Assert.assertEquals(new Answer(200 , jsonArray.toString()), editRedirectDisplay.process(emptyPayload, map, false));
+        Assert.assertEquals(new Answer(200 , jsonArray.toString()), editRedirectDisplay.process(emptyPayload, map, new HashMap<>(), false));
 
     }
 }

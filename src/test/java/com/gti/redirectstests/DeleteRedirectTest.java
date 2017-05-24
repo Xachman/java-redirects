@@ -41,7 +41,7 @@ public class DeleteRedirectTest {
 
         jsonArray.add(jsonObject);
 
-        Assert.assertEquals(new Answer(200, jsonArray.toString()), createRedirect.process(deletePayload, new HashMap<>(), false));
+        Assert.assertEquals(new Answer(200, jsonArray.toString()), createRedirect.process(deletePayload, new HashMap<>(), new HashMap<>(), false));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class DeleteRedirectTest {
         DeleteRedirect createRedirect = new DeleteRedirect(model);
 
 
-        Assert.assertEquals(new Answer(400), createRedirect.process(deletePayload, new HashMap<>(), false));
+        Assert.assertEquals(new Answer(400), createRedirect.process(deletePayload, new HashMap<>(), new HashMap<>(), false));
     }
 
     /**

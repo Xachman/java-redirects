@@ -4,6 +4,8 @@ import com.gti.redirects.*;
 import com.gti.redirects.Redirects.Payloads.RedirectPayload;
 import com.gti.redirects.Util.ViewUtil;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +24,11 @@ public class EditRedirectPost extends AbstractController<RedirectPayload> {
         Map map = new HashMap();
 
         Map saveVals = new HashMap();
-        saveVals.put("domain", value.getDomain());
-        saveVals.put("redirect_domain", value.getRedirect_domain());
-        saveVals.put("status", value.getStatus());
+        saveVals.put("domain", decodeUri(value.getDomain()));
+        saveVals.put("redirect_domain", decodeUri(value.getRedirect_domain()));
+        saveVals.put("status", decodeUri(value.getStatus()));
         saveVals.put("use_path", value.getUse_path());
 
-        System.out.println(Integer.parseInt(queryParams.get(":id").toString()));
         List<Map<String, Object>> redirects = model.update(Integer.parseInt(queryParams.get(":id").toString()), saveVals);
         if(shouldReturnHtml) {
             map.put("title", "Edit Redirect");
@@ -39,5 +40,13 @@ public class EditRedirectPost extends AbstractController<RedirectPayload> {
 
             return Answer.ok(dataToJson(redirects));
         }
+    }
+    private String decodeUri(String decode) {
+        try {
+            return URLDecoder.decode(decode, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

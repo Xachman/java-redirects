@@ -71,8 +71,8 @@ public class EditRedirectPostTest {
             jsonArray.add(jsonObject);
 
         }
-        EasyMock.verify(model);
         Assert.assertEquals(new Answer(200 , jsonArray.toString()), editRedirectPost.process(payload, mapParam, new HashMap<>(), false));
 
+        EasyMock.verify(model);
     }
 }

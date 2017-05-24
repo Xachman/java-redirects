@@ -50,6 +50,6 @@ public class Main {
 		post("/admin/edit-redirect/:id", new EditRedirectPost(redirectsModel));
 		post("/admin/delete-redirect/:id", new DeleteRedirect(redirectsModel));
 		get("/admin/login", (request, response) -> "login");
-		get("/", RedirectsControllerOld.serveRedirect);
+		get("/", new Redirector(redirectsModel));
 	}
 }

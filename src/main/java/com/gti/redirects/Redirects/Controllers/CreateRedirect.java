@@ -6,6 +6,8 @@ import com.gti.redirects.Model;
 import com.gti.redirects.Redirects.Payloads.RedirectPayload;
 import org.json.simple.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +26,11 @@ public class CreateRedirect extends AbstractController<RedirectPayload> {
         Map map = new HashMap();
 
         Map saveVals = new HashMap();
-        saveVals.put("domain", value.getDomain());
-        saveVals.put("redirect_domain", value.getRedirect_domain());
-        saveVals.put("status", value.getStatus());
+        saveVals.put("domain", decodeUri(value.getDomain()));
+        saveVals.put("redirect_domain", decodeUri(value.getRedirect_domain()));
+        saveVals.put("status", decodeUri(value.getStatus()));
         saveVals.put("use_path", value.getUse_path());
+
 
         List<Map<String, Object>> savedValue = model.save(saveVals);
 
@@ -48,5 +51,14 @@ public class CreateRedirect extends AbstractController<RedirectPayload> {
         jsonObject.put("use_path", redirect.get("use_path"));
 
         return new Answer(200, jsonObject.toJSONString());
+    }
+
+    private String decodeUri(String decode) {
+        try {
+            return URLDecoder.decode(decode, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

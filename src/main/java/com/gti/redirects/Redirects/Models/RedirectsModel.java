@@ -1,6 +1,7 @@
 package com.gti.redirects.Redirects.Models;
 
 import com.github.xachman.*;
+import com.github.xachman.Where.Where;
 import com.gti.redirects.Model;
 
 import java.io.File;
@@ -51,6 +52,18 @@ public class RedirectsModel implements Model {
     }
 
     @Override
+    public List<Map<String, Object>> find(List<Map<String, String>> maps) {
+
+        dbh.open();
+        List<Row> row = dbh.searchTable(redirectsTable, maps);
+        dbh.close();
+
+
+        List<Map<String, Object>> returnList = new ArrayList<>(convertRows(row));
+        return returnList;
+    }
+
+    @Override
     public List<Map<String, Object>> update(int id, Map<String, Object> data) {
         Map<String,String> newMap = convertObjectMapToString(data);
 
@@ -96,5 +109,13 @@ public class RedirectsModel implements Model {
             }
         }
         return newMap;
+    }
+
+    private List<Map<String, String>> convertListMap(List<Map<String, Object>> maps) {
+        List<Map<String, String>> newMaps = new ArrayList<>();
+        for(Map<String, Object> map: maps) {
+           newMaps.add(convertObjectMapToString(map));
+        }
+        return newMaps;
     }
 }

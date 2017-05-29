@@ -22,6 +22,7 @@ public class Redirector extends AbstractController<EmptyPayload> {
     @Override
     protected Answer processImpl(EmptyPayload value, Map queryParams, Map requestParams, boolean shouldReturnHtml) {
         Map redirect = getRedirectByDomain(requestParams.get("host").toString());
+        System.out.println(requestParams.get("pathInfo"));
         int status = Integer.parseInt(redirect.get("status").toString());
         String redirectLocation = "http://"+redirect.get("redirect_domain").toString();
         if(status > 400 && status < 5000) {

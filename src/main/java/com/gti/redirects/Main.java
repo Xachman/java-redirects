@@ -12,6 +12,8 @@ import com.gti.redirects.Redirects.Models.RedirectsTable;
 import spark.Spark;
 
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -21,28 +23,36 @@ public class Main {
 	public static void main(String[] args) {
 		Spark.port(4000);
 		Spark.staticFileLocation("/public");
-		RedirectStorage redirectStorage = new RedirectStorage();
+		RedirectsModel redirectsModel = new RedirectsModel(new RedirectsTable(), new SQLiteDatabaseHelper(System.getProperty("user.dir")+"/database.db"));
 		Spark.exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
+		});
+		before("/*", (request, response) -> {
+
+			if (!request.host().equals(System.getenv("HOST")) && !request.pathInfo().equals("/")) {
+				request.session(true);
+				request.session().attribute("pathInfo", request.pathInfo());
+				response.redirect("/");
+			}
 		});
 		before("/admin/*", (request, response) -> {
 			Boolean authenticated = false;
 			String auth = request.headers("Authorization");
-			if(auth != null && auth.startsWith("Basic")) {
-				String b64Credentials = auth.substring("Basic".length()).trim();
-				String credentials = new String(Base64.getDecoder().decode(b64Credentials));
-				if(credentials.equals(System.getenv("USER_NAME")+":"+System.getenv("USER_PASSWORD"))) authenticated = true;
-			}
-			if(!authenticated) {
-				response.header("WWW-Authenticate", "Basic realm=\"Restricted\"");
-				response.status(401);
-				if(!request.pathInfo().equals("/admin/login")) {
-					response.redirect("/admin/login");
-				}
-			}
+			if (auth != null && auth.startsWith("Basic")) {
+                String b64Credentials = auth.substring("Basic".length()).trim();
+                String credentials = new String(Base64.getDecoder().decode(b64Credentials));
+                if (credentials.equals(System.getenv("USER_NAME") + ":" + System.getenv("USER_PASSWORD")))
+                    authenticated = true;
+            }
+            if (!authenticated) {
+                response.header("WWW-Authenticate", "Basic realm=\"Restricted\"");
+                response.status(401);
+                if (!request.pathInfo().equals("/admin/login")) {
+                    response.redirect("/admin/login");
+                }
+            }
 		});
 
-		RedirectsModel redirectsModel = new RedirectsModel(new RedirectsTable(), new SQLiteDatabaseHelper(System.getProperty("user.dir")+"/database.db"));
 		get("/admin/create-redirect", RedirectsControllerOld.serveCreateRedirect);
 		post("/admin/create-redirect", new CreateRedirect(redirectsModel));
 		get("/admin/redirects", new RedirectsController(redirectsModel));

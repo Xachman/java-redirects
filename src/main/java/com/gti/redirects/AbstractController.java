@@ -65,6 +65,7 @@ public abstract class AbstractController<V extends Validable> implements com.gti
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
+        request.session(true);
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             QueryParamUtil qUtil = new QueryParamUtil(request.body());
@@ -75,6 +76,7 @@ public abstract class AbstractController<V extends Validable> implements com.gti
             Map<String, String> urlParams = request.params();
             Map<String, String> requestParams = new HashMap<>();
             requestParams.put("host", request.host());
+            requestParams.put("pathInfo", request.session().attribute("pathInfo"));
             Answer answer = process(value, urlParams, requestParams, shouldReturnHtml(request));
             response.status(answer.getCode());
             if(headers.size() > 0) {

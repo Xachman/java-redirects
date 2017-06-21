@@ -14,12 +14,17 @@ public class QueryParamUtil {
     public String toJson() {
         String[] parts = queryString.split("&");
 
-
         JSONObject json = new JSONObject();
 
-        for(String part: parts){
-            String[] keyVal = part.split("="); // The equal separates key and values
-            json.put(keyVal[0], keyVal[1]);
+        if(queryString.trim().length() > 0) {
+            for (String part : parts) {
+                String[] keyVal = part.split("="); // The equal separates key and values
+                String val = "";
+                if(keyVal.length > 1) {
+                    val = keyVal[1];
+                }
+                json.put(keyVal[0], val);
+            }
         }
 
         return json.toString();

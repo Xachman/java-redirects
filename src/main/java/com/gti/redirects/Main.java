@@ -44,13 +44,19 @@ public class Main {
 					response.redirect("/admin/login");
 				}
 			}
+
+			if(authenticated && request.pathInfo().equals("/admin/login")) {
+				response.redirect("/admin");
+			}
 		});
 
 		http.post("/admin/create-redirect", new CreateRedirect(redirectsModel));
+		http.get("/admin/create-redirect", new CreateRedirectDisplay(redirectsModel));
 		http.get("/admin/redirects", new RedirectsController(redirectsModel));
 		http.get("/admin/edit-redirect/:id", new EditRedirectDisplay(redirectsModel));
 		http.post("/admin/edit-redirect/:id", new EditRedirectPost(redirectsModel));
 		http.post("/admin/delete-redirect/:id", new DeleteRedirect(redirectsModel));
+		http.get("/admin", new Dashboard(redirectsModel));
 		http.get("/admin/login", (request, response) -> "login");
 	}
 

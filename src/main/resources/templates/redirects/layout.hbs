@@ -5,7 +5,7 @@
         <div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Create Redirect</h1>
+				<h1 class="page-header">Redirects</h1>
 			</div>
 			<!-- /.col-lg-12 -->
 		</div>
@@ -16,12 +16,15 @@
 					<div class="panel-heading">
 
 					</div>
-					<div class="panel-body">
+					<div class="panel-body" id="redirects">
 						<div class="row">
 							<div class="col-lg-12">
-                                <div class="redirects">
+                                <div class="redirects" >
                                     {{#each redirects}}
                                         <div class="redirect">
+                                            <span class="id">
+                                                {{id}}
+                                            </span>
                                             <span class="domain">
                                                 Domain: {{domain}}
                                             </span>
@@ -34,9 +37,14 @@
                                             <span class="use-path">
                                                 Use Path: {{use_path}}
                                             </span>
-                                            <a class="edit" href="/admin/edit-redirect/{{id}}">
-                                                edit
-                                            </a>
+                                            <span class="actions">
+                                                <a class="edit" href="/admin/edit-redirect/{{id}}">
+                                                    edit
+                                                </a>
+                                                <a class="delete" data-id="{{id}}" href="/admin/delete-redirect/{{id}}">
+                                                   delete
+                                                </a>
+                                            </span>
                                         </div>
                                     {{/each}}
                                 </div>

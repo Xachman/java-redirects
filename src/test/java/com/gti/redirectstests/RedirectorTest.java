@@ -86,4 +86,33 @@ public class RedirectorTest {
 
         EasyMock.verify(model);
     }
+    @Test
+    public void redirectWithPath() {
+        EmptyPayload emptyPayload = new EmptyPayload();
+        Assert.assertTrue(emptyPayload.isValid());
+
+        Map<String, String> request = new HashMap<>();
+        request.put("host", "test.com");
+        request.put("path", "/test/test");
+
+        Map<String, Object> returnMap = new HashMap<>();
+        returnMap.put("id", "1");
+        returnMap.put("domain", "test.com");
+        returnMap.put("redirect_domain", "test2.com");
+        returnMap.put("status", "301");
+        returnMap.put("use_path", "1");
+
+        Model model = EasyMock.createNiceMock(Model.class);
+        EasyMock.expect(model.find(EasyMock.isA(List.class))).andReturn(new ArrayList<>(Arrays.asList(returnMap)));
+        EasyMock.replay(model);
+
+        Redirector redirector = new Redirector(model);
+
+
+        Assert.assertEquals(new Answer(301, ""), redirector.process(emptyPayload, new HashMap<>(), request, false));
+
+        Assert.assertEquals(redirector.getHeaders().get("Location"), "http://test2.com");
+
+        EasyMock.verify(model);
+    }
 }

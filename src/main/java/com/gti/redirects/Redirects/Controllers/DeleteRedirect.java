@@ -42,6 +42,7 @@ public class DeleteRedirect extends AbstractController<DeleteRedirectPayload> {
 
 
         return new Answer(200,dataToJson(outputList));
+
     }
 
 }

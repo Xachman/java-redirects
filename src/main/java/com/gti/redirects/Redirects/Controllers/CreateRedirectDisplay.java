@@ -23,7 +23,7 @@ public class CreateRedirectDisplay extends AbstractController<EmptyPayload> {
     protected Answer processImpl(EmptyPayload value, Map queryParams, Map requestParams, boolean shouldReturnHtml) {
         if(shouldReturnHtml) {
             Map map = new HashMap();
-            map.put("title", "Edit Redirect");
+            map.put("title", "Create Redirect");
             map.put("content", "create-edit-redirect/layout.hbs");
             return Answer.ok(ViewUtil.render(map, "layout.hbs"));
         } else {

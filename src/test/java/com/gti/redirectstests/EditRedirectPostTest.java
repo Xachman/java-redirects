@@ -75,4 +75,10 @@ public class EditRedirectPostTest {
 
         EasyMock.verify(model);
     }
+
+    /**
+     * Created by xach on 6/21/17.
+     */
+    public static class QueryParamUtilTest {
+    }
 }

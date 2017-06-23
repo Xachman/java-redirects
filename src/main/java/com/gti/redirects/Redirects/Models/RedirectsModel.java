@@ -78,7 +78,7 @@ public class RedirectsModel implements Model {
     @Override
     public boolean delete(int id) {
         dbh.open();
-        dbh.removeById(redirectsTable, 2);
+        dbh.removeById(redirectsTable, id);
         dbh.close();
         return true;
     }

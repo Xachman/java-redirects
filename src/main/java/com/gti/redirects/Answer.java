@@ -4,6 +4,8 @@ package com.gti.redirects;
  * Created by xach on 5/11/17.
  */
 public class Answer {
+    private int code;
+    private String body;
 
     public Answer(int code) {
         this.code = code;
@@ -42,9 +44,6 @@ public class Answer {
     public int getCode() {
         return code;
     }
-
-    private int code;
-    private String body;
 
     public Answer(int code, String body){
         this.code = code;

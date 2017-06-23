@@ -77,6 +77,7 @@ public abstract class AbstractController<V extends Validable> implements com.gti
             Map<String, String> requestParams = new HashMap<>();
             requestParams.put("host", request.host());
             requestParams.put("pathInfo", request.session().attribute("pathInfo"));
+            requestParams.put("path", request.pathInfo());
             Answer answer = process(value, urlParams, requestParams, shouldReturnHtml(request));
             response.status(answer.getCode());
             if(headers.size() > 0) {

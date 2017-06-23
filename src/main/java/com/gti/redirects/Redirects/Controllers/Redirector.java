@@ -25,6 +25,9 @@ public class Redirector extends AbstractController<EmptyPayload> {
         System.out.println(requestParams.get("pathInfo"));
         int status = Integer.parseInt(redirect.get("status").toString());
         String redirectLocation = "http://"+redirect.get("redirect_domain").toString();
+        if(redirect.get("use_path").toString().equals("1")) {
+            redirectLocation += requestParams.get("path");
+        }
         if(status > 400 && status < 500) {
             Map<String, Object> map = new HashMap<>();
             map.put("redirectLocation", redirectLocation);

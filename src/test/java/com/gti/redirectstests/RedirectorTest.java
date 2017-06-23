@@ -111,7 +111,7 @@ public class RedirectorTest {
 
         Assert.assertEquals(new Answer(301, ""), redirector.process(emptyPayload, new HashMap<>(), request, false));
 
-        Assert.assertEquals(redirector.getHeaders().get("Location"), "http://test2.com");
+        Assert.assertEquals(redirector.getHeaders().get("Location"), "http://test2.com/test/test");
 
         EasyMock.verify(model);
     }

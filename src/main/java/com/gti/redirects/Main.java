@@ -22,13 +22,15 @@ public class Main {
 	}
 
 	static void startAdminInstance() {
-		Service http = ignite().port(4000);
+		int port = System.getenv("AMDMIN_PORT") != null && System.getenv("ADMIN_PORT").length() > 0 && Integer.parseInt(System.getenv("ADMIN_PORT")) > 0? Integer.parseInt(System.getenv("ADMIN_PORT")) : 4000;
+		System.out.println("Admin port is: "+port);
+		Service http = ignite().port(port);
 
 		http.staticFileLocation("/public");
 		http.exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
 		});
-		http.before("/admin/*", (request, response) -> {
+		http.before("/*", (request, response) -> {
 			Boolean authenticated = false;
 			String auth = request.headers("Authorization");
 			if (auth != null && auth.startsWith("Basic")) {
@@ -37,16 +39,14 @@ public class Main {
 				if (credentials.equals(System.getenv("USER_NAME") + ":" + System.getenv("USER_PASSWORD")))
 					authenticated = true;
 			}
+			System.out.println("authenticated: "+ authenticated);
+			System.out.println("auth: "+auth);
 			if (!authenticated) {
 				response.header("WWW-Authenticate", "Basic realm=\"Restricted\"");
 				response.status(401);
 				if (!request.pathInfo().equals("/admin/login")) {
 					response.redirect("/admin/login");
 				}
-			}
-
-			if(authenticated && request.pathInfo().equals("/admin/login")) {
-				response.redirect("/admin");
 			}
 		});
 
@@ -61,7 +61,9 @@ public class Main {
 	}
 
 	static void startRedirectInstance() {
-		Service http = ignite().port(3480);
+		int port = System.getenv("REDIRECT_PORT") != null && System.getenv("REDIRECT_PORT").length() > 0 && Integer.parseInt(System.getenv("REDIRECT_PORT")) > 0? Integer.parseInt(System.getenv("REDIRECT_PORT")) : 8080;
+		System.out.println("Redirect port is: "+port);
+		Service http = ignite().port(port);
 		http.get("/*", new Redirector(redirectsModel));
 		http.exception(Exception.class, (exception, request, response) -> {
 			exception.printStackTrace();
